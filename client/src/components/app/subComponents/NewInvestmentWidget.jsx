@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import FetchWithAuth from "../../auth/api";
 import Loader from "./Loader";
 import useAuth from "../../auth/useAuth";
+import { formatToNewYorkTime } from "../../../assets/helpers";
 
 const LatestInvestments = () => {
   const { admin } = useAuth();
@@ -81,7 +82,7 @@ const LatestInvestments = () => {
                       ${parseFloat(amount).toLocaleString()}
                     </Typography>
                     <Typography variant='small' color='gray'>
-                      {new Date(createdAt).toUTCString()}
+                      {formatToNewYorkTime(createdAt)}
                     </Typography>
                   </div>
                 </div>

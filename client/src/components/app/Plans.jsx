@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useNotification } from "../layout/NotificationHelper";
 import FetchWithAuth from "../auth/api";
 import Loader from "./subComponents/Loader.jsx";
-import { formatToUTCString } from "../../assets/helpers.js";
+import { formatToNewYorkTime } from "../../assets/helpers.js";
 import { TrashIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import InvestmentTable from "./subComponents/InvestmentTable.jsx";
 import { Card } from "@material-tailwind/react";
@@ -29,7 +29,7 @@ import { Card } from "@material-tailwind/react";
  *
  * @property {function} useNotification - Custom hook for displaying notifications.
  * @property {function} FetchWithAuth - Custom function for making authenticated API requests.
- * @property {function} formatToUTCString - Helper function for formatting dates to UTC string.
+ * @property {function} formatToNewYorkTime - Helper function for formatting dates to UTC string.
  * @property {function} useState - React hook for managing state.
  * @property {function} useEffect - React hook for performing side effects.
  * @property {function} useMemo - React hook for memoizing values.
@@ -335,7 +335,7 @@ const Plans = () => {
                     <td className='p-4'>{parseFloat(plan.limits.max).toLocaleString()}</td>
                     <td className='p-4'>{plan.ROIPercentage}</td>
                     <td className='p-4'>{plan.duration}</td>
-                    <td className='p-4 min-w-[16rem]'>{formatToUTCString(plan.updatedAt)}</td>
+                    <td className='p-4 min-w-[16rem]'>{formatToNewYorkTime(plan.updatedAt)}</td>
                     <td className='py-4'>
                       <TrashIcon
                         title='Clear filters'

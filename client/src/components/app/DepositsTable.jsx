@@ -33,7 +33,7 @@
  * @function deleteEntry - Deletes a deposit entry.
  */
 import { useEffect, useState, useMemo } from "react";
-import { formatToUTCString } from "../assets/helpers.js";
+import { formatToNewYorkTime } from "../assets/helpers.js";
 import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/solid";
 import FetchWithAuth from "../auth/api.js";
 import { useNotification } from "../layout/NotificationHelper";
@@ -258,7 +258,9 @@ const DepositsTable = () => {
                     {transaction.bonus.toLocaleString()}
                   </td>
                   <td className='p-4 capitalize'>{transaction.status}</td>
-                  <td className='p-4 min-w-[16rem]'>{formatToUTCString(transaction.createdAt)}</td>
+                  <td className='p-4 min-w-[16rem]'>
+                    {formatToNewYorkTime(transaction.createdAt)}
+                  </td>
                   <td className='py-4'>
                     <TrashIcon
                       className='h-5 w-5 hover:scale-110 transition-all cursor-pointer text-text-light mx-auto'

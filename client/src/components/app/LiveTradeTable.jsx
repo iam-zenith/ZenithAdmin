@@ -10,7 +10,7 @@ import { useNotification } from "../layout/NotificationHelper";
 import Loader from "./subComponents/Loader.jsx";
 import { Card } from "@material-tailwind/react";
 import FetchWithAuth from "../auth/api.js";
-import { formatToUTCString } from "../../assets/helpers.js";
+import { formatToNewYorkTime } from "../../assets/helpers.js";
 import { useNavigate } from "react-router-dom";
 import { formatTime } from "../assets/helpers.js";
 /**
@@ -269,9 +269,9 @@ const LiveTradeHistoryTable = () => {
                     {trade.profitLoss ? `$${parseFloat(trade.profitLoss).toLocaleString()}` : "N/A"}
                   </td>
                   <td className='p-4 capitalize'>{trade.status}</td>
-                  <td className='p-4 min-w-[12rem]'>{formatToUTCString(trade.createdAt)}</td>
+                  <td className='p-4 min-w-[12rem]'>{formatToNewYorkTime(trade.createdAt)}</td>
                   <td className='p-4 min-w-[12rem]'>
-                    {trade.closedAt ? formatToUTCString(trade.closedAt) : "N/A"}
+                    {trade.closedAt ? formatToNewYorkTime(trade.closedAt) : "N/A"}
                   </td>
                   <td className='p-4'>
                     {trade.duration ? formatTime(parseFloat(trade.duration)) : "N/A"}

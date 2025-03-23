@@ -5,7 +5,7 @@ import {
   ClipboardDocumentCheckIcon,
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/solid";
-import { formatToUTCString } from "../../assets/helpers.js";
+import { formatToNewYorkTime } from "../../assets/helpers.js";
 import { useParams, useNavigate } from "react-router-dom";
 import { useNotification } from "../../layout/NotificationHelper";
 import { Card, CardBody, CardHeader, IconButton, Typography } from "@material-tailwind/react";
@@ -149,19 +149,20 @@ const SingleUser = () => {
               {parsedUser.active ? "Yes" : "No"}
             </p>
             <p>
-              <strong className='text-primary-light'>Last Seen:</strong> {parsedUser.lastSeen}
+              <strong className='text-primary-light'>Last Seen:</strong>{" "}
+              {formatToNewYorkTime(parsedUser.lastSeen)}
             </p>
             <p>
               <strong className='text-primary-light'>Registered:</strong>{" "}
-              {formatToUTCString(parsedUser.createdAt)}
+              {formatToNewYorkTime(parsedUser.createdAt)}
             </p>
             <p>
               <strong className='text-primary-light'>Last Updated At:</strong>{" "}
-              {formatToUTCString(parsedUser.updatedAt)}
+              {formatToNewYorkTime(parsedUser.updatedAt)}
             </p>
             <p>
               <strong className='text-primary-light'>Last Password Change:</strong>{" "}
-              {parsedUser.lastPasswordChange}
+              {formatToNewYorkTime(parsedUser.lastPasswordChange)}
             </p>
           </div>
         </CardBody>
@@ -189,7 +190,7 @@ const SingleUser = () => {
             </p>
             <p>
               <strong className='text-primary-light'>Referral Code:</strong>{" "}
-              {parsedUser.referralCode}
+              {parsedUser.referralCode || "Nil"}
             </p>
           </div>
         </CardBody>

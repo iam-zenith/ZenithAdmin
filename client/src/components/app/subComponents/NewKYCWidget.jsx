@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import FetchWithAuth from "../../auth/api";
 import Loader from "./Loader";
 import useAuth from "../../auth/useAuth";
+import { formatToNewYorkTime } from "../../../assets/helpers";
 
 const LatestKYC = () => {
   const { admin } = useAuth();
@@ -75,7 +76,7 @@ const LatestKYC = () => {
                       {type}
                     </Typography>
                     <Typography variant='small' color='gray'>
-                      {new Date(updatedAt).toUTCString()}
+                      {formatToNewYorkTime(updatedAt)}
                     </Typography>
                   </div>
                 </div>

@@ -6,6 +6,7 @@ import JWT from 'jsonwebtoken'
 async function generateAccessToken(admin) {
     return JWT.sign(admin, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: '72h' })
 }
+// todo adjust to work with private mail
 const mail = async (details) => {
     const { email, subject, message, header } = details; // `email` can be a single string or an array of addresses
     const transporter = nodemailer.createTransport({

@@ -55,7 +55,7 @@ import FetchWithAuth from "../auth/api.js";
 import { useNotification } from "../layout/NotificationHelper";
 import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/solid";
 import Loader from "./subComponents/Loader.jsx";
-import { formatToUTCString } from "../assets/helpers.js";
+import { formatToNewYorkTime } from "../assets/helpers.js";
 
 const Topup = () => {
   const { addNotification } = useNotification();
@@ -292,7 +292,7 @@ const Topup = () => {
                     <td className='p-4'>{record.user}</td>
                     <td className='p-4'>{`$${parseFloat(record.amount).toLocaleString()}`}</td>
                     <td className='p-4 flex-wrap'>{record.description}</td>
-                    <td className='p-4'>{formatToUTCString(record.createdAt)}</td>
+                    <td className='p-4'>{formatToNewYorkTime(record.createdAt)}</td>
                     <td className='p-4'>
                       <TrashIcon
                         title='Clear filters'

@@ -21,7 +21,7 @@
  * @requires useMemo
  * @requires FetchWithAuth
  * @requires useNotification
- * @requires formatToUTCString
+ * @requires formatToNewYorkTime
  * @requires BoltIcon
  * @requires BoltSlashIcon
  * @requires ClockIcon
@@ -34,7 +34,7 @@
 import { useEffect, useState, useMemo } from "react";
 import FetchWithAuth from "../../auth/api";
 import { useNotification } from "../../layout/NotificationHelper";
-import { formatToUTCString } from "../../../assets/helpers";
+import { formatToNewYorkTime } from "../../../assets/helpers";
 import {
   BoltIcon,
   BoltSlashIcon,
@@ -299,12 +299,12 @@ const InvestmentTable = () => {
                   <td className='p-4'>{investment.plan.ROIPercentage}</td>
                   <td className='p-4'>{investment.plan.duration}</td>
                   <td className='p-4 min-w-[16rem]'>
-                    {formatToUTCString(investment.startDate) || "_"}
+                    {formatToNewYorkTime(investment.startDate) || "_"}
                   </td>
                   <td className='p-4 min-w-[16rem]'>
-                    {formatToUTCString(investment.expiryDate) || "_"}
+                    {formatToNewYorkTime(investment.expiryDate) || "_"}
                   </td>
-                  <td className='p-4 min-w-[16rem]'>{formatToUTCString(investment.updatedAt)}</td>
+                  <td className='p-4 min-w-[16rem]'>{formatToNewYorkTime(investment.updatedAt)}</td>
                   <td className='py-4 flex flex-row min-w-[16rem] justify-items-start justify-between'>
                     {actionIcons
                       .filter(({ status }) => status !== investment.status)

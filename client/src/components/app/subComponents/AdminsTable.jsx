@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { formatToUTCString } from "../../assets/helpers.js";
+import { formatToNewYorkTime } from "../../assets/helpers.js";
 import { BoltIcon, MagnifyingGlassIcon, NoSymbolIcon, TrashIcon } from "@heroicons/react/24/solid";
 import FetchWithAuth from "../../auth/api.js";
 import { useNotification } from "../../layout/NotificationHelper";
@@ -310,9 +310,9 @@ const AdminsTable = () => {
                 <tr key={admin._id} className='border-b hover:bg-primary-dark'>
                   <td className='p-4'>{admin._id}</td>
                   <td className='p-4 min-w-[10rem]'>{admin.username}</td>
-                  <td className='p-4 min-w-[10rem]'>{formatToUTCString(admin.lastSeen)}</td>
+                  <td className='p-4 min-w-[10rem]'>{formatToNewYorkTime(admin.lastSeen)}</td>
                   <td className='p-4 min-w-[10rem]'>{admin.createdBy.username}</td>
-                  <td className='p-4 min-w-[10rem]'>{formatToUTCString(admin.createdAt)}</td>
+                  <td className='p-4 min-w-[10rem]'>{formatToNewYorkTime(admin.createdAt)}</td>
                   <td className='p-4 min-w-[10rem]'>{admin?.lastLoginDetails?.os || "N/A"}</td>
                   <td className='p-4 min-w-[10rem]'>{admin?.lastLoginDetails?.device || "N/A"}</td>
                   <td className='p-4 min-w-[10rem]'>{admin?.lastLoginDetails?.browser || "N/A"}</td>

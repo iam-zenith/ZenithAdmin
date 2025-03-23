@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FetchWithAuth from "../../auth/api";
 import Loader from "./Loader";
+import { formatToNewYorkTime } from "../../../assets/helpers";
 
 const LatestWithdrawalRequests = () => {
   const [withdrawalRequests, setRequests] = useState([]);
@@ -73,7 +74,7 @@ const LatestWithdrawalRequests = () => {
                       ${parseFloat(amount).toLocaleString()}
                     </Typography>
                     <Typography variant='small' color='gray'>
-                      {new Date(createdAt).toUTCString()}
+                      {formatToNewYorkTime(createdAt)}
                     </Typography>
                   </div>
                 </div>

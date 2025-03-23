@@ -15,7 +15,7 @@ import {
   ExclamationCircleIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import { formatTime, formatToUTCString } from "../../assets/helpers.js";
+import { formatTime, formatToNewYorkTime } from "../../assets/helpers.js";
 import { useParams, useNavigate } from "react-router-dom";
 import { useNotification } from "../../layout/NotificationHelper";
 import { useEffect, useState } from "react";
@@ -252,11 +252,11 @@ export default function SingleTrade() {
           </p>
           <p>
             <strong className='text-primary-light'>Created At:</strong>{" "}
-            {formatToUTCString(parsedTrade.createdAt)}
+            {formatToNewYorkTime(parsedTrade.createdAt)}
           </p>
           <p>
             <strong className='text-primary-light'>Closed At:</strong>{" "}
-            {parsedTrade.closedAt ? formatToUTCString(parsedTrade.closedAt) : "N/A"}
+            {parsedTrade.closedAt ? formatToNewYorkTime(parsedTrade.closedAt) : "N/A"}
           </p>
           <p>
             <strong className='text-primary-light'>Duration:</strong>{" "}

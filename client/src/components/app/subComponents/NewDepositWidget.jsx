@@ -28,7 +28,7 @@ import {
   ltcIcon,
   paypalIcon,
 } from "../../assets/icons.jsx";
-import { formatToUTCString } from "../../assets/helpers.js";
+import { formatToNewYorkTime } from "../../assets/helpers.js";
 import { useNotification } from "../../layout/NotificationHelper.jsx";
 
 /**
@@ -223,7 +223,7 @@ export default function LatestDeposit() {
               </div>
               <p>
                 <strong className='text-primary-light'>Date:</strong>{" "}
-                {formatToUTCString(deposit.createdAt)}
+                {formatToNewYorkTime(deposit.createdAt)}
               </p>
             </div>
           </>

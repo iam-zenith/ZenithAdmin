@@ -11,6 +11,7 @@ import FetchWithAuth from "../../auth/api";
 import Loader from "./Loader";
 import useAuth from "../../auth/useAuth";
 import { liveTradeIcon } from "../../assets/icons";
+import { formatToNewYorkTime } from "../../../assets/helpers";
 const LatestLiveTrade = () => {
   const { admin } = useAuth();
   const [livetrades, setLivetrades] = useState([]);
@@ -83,7 +84,7 @@ const LatestLiveTrade = () => {
                       ${parseFloat(entryPrice).toLocaleString()}
                     </Typography>
                     <Typography variant='small' color='gray'>
-                      {new Date(createdAt).toUTCString()}
+                      {formatToNewYorkTime(createdAt)}
                     </Typography>
                   </div>
                 </div>

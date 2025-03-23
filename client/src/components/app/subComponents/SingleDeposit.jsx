@@ -18,7 +18,7 @@ import {
   ExclamationCircleIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import { formatToUTCString } from "../../assets/helpers.js";
+import { formatToNewYorkTime } from "../../assets/helpers.js";
 import { useParams, useNavigate } from "react-router-dom";
 import { useNotification } from "../../layout/NotificationHelper";
 import {
@@ -302,7 +302,7 @@ export default function SingleDeposit() {
           </div>
           <p>
             <strong className='text-primary-light'>Date:</strong>{" "}
-            {formatToUTCString(parsedTransaction.createdAt)}
+            {formatToNewYorkTime(parsedTransaction.createdAt)}
           </p>
           <form>
             <label className='block text-sm font-semibold text-text-light mb-1' htmlFor='amount'>

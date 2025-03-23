@@ -7,7 +7,7 @@ import {
   DocumentDuplicateIcon,
   XCircleIcon,
 } from "@heroicons/react/24/solid";
-import { formatToUTCString } from "../../assets/helpers.js";
+import { formatToNewYorkTime } from "../../assets/helpers.js";
 import { useParams, useNavigate } from "react-router-dom";
 import { useNotification } from "../../layout/NotificationHelper";
 import { Card, CardBody, CardHeader, IconButton, Typography } from "@material-tailwind/react";
@@ -138,11 +138,11 @@ const ViewKYC = () => {
           </p>
           <p>
             <strong className='text-primary-light'>Created At:</strong>{" "}
-            {formatToUTCString(parsedKYC.createdAt)}
+            {formatToNewYorkTime(parsedKYC.createdAt)}
           </p>
           <p>
             <strong className='text-primary-light'>Updated At:</strong>{" "}
-            {formatToUTCString(parsedKYC.updatedAt)}
+            {formatToNewYorkTime(parsedKYC.updatedAt)}
           </p>
         </div>
         <div className='my-2 flex flex-col space-y-2'>

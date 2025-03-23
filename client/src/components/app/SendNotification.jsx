@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useNotification } from "../layout/NotificationHelper";
 import FetchWithAuth from "../auth/api";
 import Loader from "./subComponents/Loader.jsx";
-import { formatToUTCString } from "../../assets/helpers.js";
+import { formatToNewYorkTime } from "../../assets/helpers.js";
 import { TrashIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Card } from "@material-tailwind/react";
 
@@ -345,10 +345,10 @@ const SendNotification = () => {
                     <td className='p-4 min-w-[16rem]'>{notification.message}</td>
                     <td className='p-4 capitalize'>{notification.type}</td>
                     <td className='p-4 min-w-[16rem]'>
-                      {formatToUTCString(notification.updatedAt)}
+                      {formatToNewYorkTime(notification.updatedAt)}
                     </td>
                     <td className='p-4 min-w-[16rem]'>
-                      {formatToUTCString(notification.expiryDate)}
+                      {formatToNewYorkTime(notification.expiryDate)}
                     </td>
                     <td className='p-4'>
                       {notification.targets.length < 6

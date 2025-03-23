@@ -39,6 +39,7 @@ import FetchWithAuth from "../auth/api";
 import { useNotification } from "../layout/NotificationHelper";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
 import { Card } from "@material-tailwind/react";
+import { formatToNewYorkTime } from "../../assets/helpers";
 
 const Whatsapp = () => {
   const [loading, setLoading] = useState(false);
@@ -145,7 +146,7 @@ const Whatsapp = () => {
         <strong className='text-primary-light'>Current Whatsapp number:</strong> {number}
       </p>
       <p>
-        <strong className='text-primary-light'>Updated at:</strong> {updatedAt}
+        <strong className='text-primary-light'>Updated at:</strong> {formatToNewYorkTime(updatedAt)}
       </p>
       <form onSubmit={handleUpdate} className='flex flex-col space-y-2'>
         <div>

@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { formatToUTCString } from "../assets/helpers.js";
+import { formatToNewYorkTime } from "../assets/helpers.js";
 import {
   MagnifyingGlassIcon,
   TrashIcon,
@@ -321,8 +321,8 @@ const Kyc = () => {
                   <td className='p-4'>{entry.user}</td>
                   <td className='p-4'>{entry.type}</td>
                   <td className='p-4 capitalize'>{entry.state ? "Verified" : "Unverified"}</td>
-                  <td className='p-4'>{formatToUTCString(entry.createdAt)}</td>
-                  <td className='p-4'>{formatToUTCString(entry.updatedAt)}</td>
+                  <td className='p-4'>{formatToNewYorkTime(entry.createdAt)}</td>
+                  <td className='p-4'>{formatToNewYorkTime(entry.updatedAt)}</td>
                   <td className='py-4 flex flex-row justify-items-start justify-between'>
                     {entry.state ? (
                       <XCircleIcon
