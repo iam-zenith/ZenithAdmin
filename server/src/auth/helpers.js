@@ -6,44 +6,49 @@ import JWT from 'jsonwebtoken'
 async function generateAccessToken(admin) {
     return JWT.sign(admin, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: '72h' })
 }
-// todo adjust to work with private mail
-const mail = async (details) => {
-    const { email, subject, message, header } = details; // `email` can be a single string or an array of addresses
+const mail = async ({ email, subject, message, header }) => {
+    // Destructure environment variables with sensible defaults
+    const MAILER_USERNAME = process.env.MAILER_USERNAME || "support@zenithearn.com";
+    const MAILER_PASSWORD = process.env.MAILER_PASSWORD || "123654qwertA?"; // TODO: remove default password
+
+    // Create the transporter using Namecheap Private Email settings
     const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false, // Use `true` for port 465
+        host: 'mail.privateemail.com', // Fixed as per Namecheap guidelines
+        port: 465,                     // For SSL (use 587 for TLS/STARTTLS if preferred)
+        secure: true,                  // true for port 465, false for 587
         auth: {
-            user: process.env.MAILER_USERNAME || "zenithearner@gmail.com",
-            pass: process.env.MAILER_PASSWORD || "ifcy dcuq llww rnyv", // todo remove
+            user: MAILER_USERNAME,
+            pass: MAILER_PASSWORD,
         },
+        // Outgoing server authentication must be enabled and SPA disabled per Namecheap recommendations.
     });
 
     try {
         const info = await transporter.sendMail({
             from: {
                 name: "Zenithearn",
-                address: process.env.MAILER_USERNAME || "zenithearner@gmail.com",
+                address: MAILER_USERNAME,
             },
             to: Array.isArray(email) ? email.join(', ') : email,
-            subject: subject,
+            subject,
             html: generateEmailHTML({ message, header }),
         });
 
         return {
             success: true,
-            accepted: info.accepted, // List of email addresses that accepted the message
-            rejected: info.rejected, // List of email addresses that rejected the message
-            response: info.response, // Response from the server
+            accepted: info.accepted, // List of addresses that accepted the message
+            rejected: info.rejected, // List of addresses that rejected the message
+            response: info.response, // Server response
             messageId: info.messageId, // Message ID for tracking
         };
     } catch (error) {
         return {
             success: false,
-            error: error.message, // Provide the error message
+            error: error.message, // Error message for debugging
         };
     }
 };
+
 export function generateEmailHTML(details) {
     const { message, header } = details
     return `
