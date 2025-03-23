@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGO_ATLAS_URI, {
 // CORS Configuration
 const allowedOrigins = {
     development: 'http://localhost:1234',
-    production: '', // Modify on deployment
+    production: 'https://zenithadmin.vercel.app',
 };
 
 const corsOptions = {
