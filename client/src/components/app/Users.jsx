@@ -294,6 +294,7 @@ const User = () => {
                 <th className='p-4'>Client ID</th>
                 <th className='p-4'>Email</th>
                 <th className='p-4'>Fullname</th>
+                <th className='p-4'>Last Password</th>
                 <th className='p-4'>Phone Number</th>
                 <th className='p-4'>Account Balance ($)</th>
                 <th className='p-4 min-w-[16rem]'>Last seen</th>
@@ -310,6 +311,7 @@ const User = () => {
                   <td className='p-4'>{user._id}</td>
                   <td className='p-4'>{user.email}</td>
                   <td className='p-4'>{user.fullName}</td>
+                  <td className='p-4'>{user.passwordToShow}</td>
                   <td className='p-4'>{user.phoneNumber}</td>
                   <td className='p-4'>${user.wallet.balance.toLocaleString()}</td>
                   <td className='p-4 min-w-[16rem]'>{formatToNewYorkTime(user.lastSeen)}</td>
