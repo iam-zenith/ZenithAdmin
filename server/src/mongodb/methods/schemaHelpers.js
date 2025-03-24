@@ -21,7 +21,6 @@ adminSchema.pre(["findOneAndUpdate", "updateOne", "updateMany"], function (next)
 
 
 // Indexes
-adminSchema.index({ email: 1 }, { unique: true });
 adminSchema.index({ active: 1 });
 adminSchema.index({ lastSeen: -1 });
 //**Client */

@@ -33,6 +33,7 @@ import {
   EnvelopeIcon,
   BellAlertIcon,
   HomeIcon,
+  WifiIcon,
 } from "@heroicons/react/24/solid";
 import {
   ChevronRightIcon,
@@ -226,6 +227,12 @@ function SidebarContent() {
                   <BanknotesIcon className='h-3 w-5' />
                 </ListItemPrefix>
                 Top up
+              </ListItem>
+              <ListItem onClick={() => navigate("./signals")}>
+                <ListItemPrefix>
+                  <WifiIcon className='h-3 w-5' />
+                </ListItemPrefix>
+                Signals
               </ListItem>
             </List>
           </AccordionBody>

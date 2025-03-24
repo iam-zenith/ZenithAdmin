@@ -24,6 +24,7 @@ import Billing from "./app/Billing";
 import SingleUser from "./app/subComponents/SingleUser";
 import ViewKYC from "./app/subComponents/ViewKYC";
 import SingleTrade from "./app/subComponents/SingleTrade";
+import Signal from "./app/Signal";
 export default function Router() {
   const Layout = () => {
     return (
@@ -73,6 +74,7 @@ export default function Router() {
         { path: "whatsapp", element: <Whatsapp /> },
         { path: "users", element: <Users /> },
         { path: "top-up", element: <Topup /> },
+        { path: "signals", element: <Signal /> },
         { path: "mailing", element: <Mailing /> },
         { path: "send-notification", element: <SendNotification /> },
         { path: "billing", element: <Billing /> },

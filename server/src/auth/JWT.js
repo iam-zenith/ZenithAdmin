@@ -115,7 +115,6 @@ Router.route('/manage-admins')
         try {
             // Create new admin
             const newAdmin = await createAdmin({ username: newAdminUsername, password, id: _id, admin });
-
             if (!newAdmin) {
                 return res.status(500).json({ message: 'Admin creation failed' });
             }

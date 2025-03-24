@@ -892,5 +892,22 @@ Router.route('/dashboard-widget/:widgetType')
             return res.status(500).json({ message: 'Internal Server Error' });
         }
     });
-
+// Route to handle signal
+Router.route('/signal')
+    .put(authenticate, async (req, res) => {
+        const { userDetails, signal } = req.body;
+        if (!isValidObjectId(userDetails.userId)) {
+            return res.status(400).json({ message: 'Invalid userId provided' });
+        }
+        try {
+            const signalSet = await updateUserFields(userDetails.userId, { signal: signal });
+            if (!signalSet) {
+                return res.status(500).json({ message: 'Error updating signal' });
+            }
+            res.status(200).json({ message: 'Update successful', success: true });
+        } catch (error) {
+            console.error('Error in signal Update:', error);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    })
 export default Router;

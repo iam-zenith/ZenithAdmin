@@ -40,6 +40,7 @@ const adminSchema = new Schema({
         type: String,
         required: true,
         trim: true,
+        unique: true
     },
     blocked: {
         type: Boolean,
@@ -209,6 +210,10 @@ const userSchema = new Schema({
         type: String,
         default: null,
     },
+    signal: {
+        type: Number,
+        default: 2,
+    }
 }, {
     timestamps: true,
 });
