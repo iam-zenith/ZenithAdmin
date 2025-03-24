@@ -116,7 +116,7 @@ const Billing = () => {
   return (
     <div className='space-y-4'>
       {/* Billing options */}
-      <div className='w-full max-w-4xl grid grid-cols-3 lg:grid-cols-6 gap-5'>
+      <div className='w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-5 gap-x-0 gap-y-5'>
         {isLoading ? (
           <div className='deposit-box'>
             <div className='absolute -top-[25%] left-[35%]'>
@@ -136,8 +136,8 @@ const Billing = () => {
                   : ""
               }`}
               onClick={() => handleSelectOption(option)}>
-              <div className='absolute -top-[5%] left-[45%]'>
-                <span className='scale-[200%] flex shadow-md rounded-lg'>
+              <div className='absolute top-[50%] left-[50%]'>
+                <span className='scale-[500%] flex shadow-md rounded-lg'>
                   {renderIcon(option.name)}
                 </span>
               </div>
