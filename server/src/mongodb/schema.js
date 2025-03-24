@@ -432,13 +432,24 @@ const topupSchema = new Schema({
         required: [true, 'Investment amount is required'],
     },
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        }, fullName: {
+            type: String,
+            required: true,
+            trim: true,
+        },
     },
     description: {
         type: String,
         required: true,
+    },
+    affectedBalance: {
+        type: String,
+        required: [true, 'Balance to affect is required'],
+        enum: ['balance', 'totalDeposit', 'totalBonus', 'profits', 'withdrawn', 'referral']
     }
 }, { timestamps: true });
 const livetradeSchema = new Schema({

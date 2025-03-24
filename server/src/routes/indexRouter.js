@@ -777,13 +777,12 @@ Router.route('/kyc')
 // Route to handle top-ups
 Router.route('/topup')
     .post(authenticate, async (req, res) => {
-        const { userId, amount, description } = req.body;
-
-        if (!isValidObjectId(userId)) {
+        const { userDetails, amount, description, affectedBalance } = req.body;
+        if (!isValidObjectId(userDetails.userId)) {
             return res.status(400).json({ message: 'Invalid userId provided' });
         }
         try {
-            const topup = await createTopup({ amount, description, userId });
+            const topup = await createTopup({ amount, description, userDetails: { userId: userDetails.userId, fullName: userDetails.fullName }, affectedBalance });
             if (!topup) {
                 return res.status(500).json({ message: 'Error creating top-up' });
             }

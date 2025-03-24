@@ -21,7 +21,7 @@
  *
  * @property {function} addNotification - Function to add notifications.
  * @property {boolean} loading - State to indicate loading status.
- * @property {string} userId - State to store user ID.
+ * @property {string} userDetails - State to store user.
  * @property {string} amount - State to store top-up amount.
  * @property {string} description - State to store top-up description.
  * @property {Array} topupRecords - State to store top-up records.
@@ -60,9 +60,11 @@ import { formatToNewYorkTime } from "../assets/helpers.js";
 const Topup = () => {
   const { addNotification } = useNotification();
   const [loading, setLoading] = useState(false);
-  const [userId, setuserId] = useState("");
+  const [userDetails, setuserDetails] = useState("");
+  const [users, setUsers] = useState([]);
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
+  const [affectedBalance, setAffectedBalance] = useState("");
   const [topupRecords, setTopupRecords] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -96,7 +98,7 @@ const Topup = () => {
         "/topup",
         {
           method: "POST",
-          body: JSON.stringify({ userId, amount, description }),
+          body: JSON.stringify({ userDetails, amount, description, affectedBalance }),
           credentials: "include",
         },
         "Failed to top up"
@@ -108,9 +110,10 @@ const Topup = () => {
         const { message } = response;
         addNotification(message, "success");
         // Reset form fields
-        setuserId("");
+        setuserDetails("");
         setAmount("");
         setDescription("");
+        setAffectedBalance("");
         fetchTopupRecords(); // Refresh top-up records
       }
     } catch (err) {
@@ -148,10 +151,36 @@ const Topup = () => {
       setLoading(false);
     }
   };
-
+  // Function to fetch users
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await FetchWithAuth(
+        `/users`,
+        {
+          method: "GET",
+          credentials: "include",
+        },
+        "Failed to fetch users"
+      );
+      if (response.failed) {
+        addNotification(response.message, "error");
+      } else {
+        const { users, message } = response;
+        users && setUsers(users.reverse());
+        addNotification(message);
+      }
+    } catch (err) {
+      addNotification("An error occurred", "error");
+      console.error("Fetch error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
   // Fetch top-up records on component mount
   useEffect(() => {
     fetchTopupRecords();
+    fetchUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -197,7 +226,6 @@ const Topup = () => {
       setLoading(false);
     }
   };
-
   return (
     <main className='grid md:grid-cols-5 grid-cols-1 gap-4'>
       <Card
@@ -207,18 +235,26 @@ const Topup = () => {
         <h2 className='text-lg font-semibold mb-2'>Top up</h2>
         <form className='flex flex-col space-y-2' onSubmit={handleSubmit}>
           <div>
-            <label className='block text-sm font-semibold text-text-light mb-1' htmlFor='client-id'>
-              Client ID
+            <label className='block text-sm font-semibold text-text-light mb-1' htmlFor='client'>
+              Client
             </label>
-            <input
-              type='text'
+            <select
               className='form-input w-full'
-              value={userId}
-              onChange={(e) => setuserId(e.target.value)}
-              placeholder='Enter Client ID'
-              id='client-id'
-              required
-            />
+              value={JSON.stringify(userDetails)} // Ensure it's always a string
+              onChange={(e) => setuserDetails(JSON.parse(e.target.value))} // Convert back to object
+              id='client'
+              required>
+              <option value='' disabled>
+                Select a client
+              </option>
+              {users.map((user) => (
+                <option
+                  key={user._id}
+                  value={JSON.stringify({ userId: user._id, fullName: user.fullName })}>
+                  {user.fullName}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label className='block text-sm font-semibold text-text-light mb-1' htmlFor='amount'>
@@ -237,6 +273,30 @@ const Topup = () => {
           <div>
             <label
               className='block text-sm font-semibold text-text-light mb-1'
+              htmlFor='affectedBalance'>
+              Affected Balance
+            </label>
+            <select
+              className='form-input w-full'
+              value={affectedBalance}
+              onChange={(e) => setAffectedBalance(e.target.value)}
+              id='affectedBalance'
+              required>
+              <option value='' disabled>
+                Select balance to affect
+              </option>
+              {["balance", "totalDeposit", "totalBonus", "profits", "withdrawn", "referral"].map(
+                (option) => (
+                  <option key={option} value={option}>
+                    {option.charAt(0).toUpperCase() + option.slice(1)}
+                  </option>
+                )
+              )}
+            </select>
+          </div>
+          <div>
+            <label
+              className='block text-sm font-semibold text-text-light mb-1'
               htmlFor='description'>
               Description
             </label>
@@ -250,7 +310,10 @@ const Topup = () => {
               required
             />
           </div>
-          <button type='submit' className='accent-btn w-full' disabled={loading || amount <= 0}>
+          <button
+            type='submit'
+            className='accent-btn w-full'
+            disabled={loading || isNaN(amount) || amount === 0}>
             {loading ? "Processing..." : "Top Up"}
           </button>
         </form>
@@ -279,7 +342,7 @@ const Topup = () => {
             <table className='w-full text-left text-sm'>
               <thead className='bg-primary-mild'>
                 <tr>
-                  <th className='p-4'>Client ID</th>
+                  <th className='p-4'>Client</th>
                   <th className='p-4'>Amount($)</th>
                   <th className='p-4 flex-wrap'>Description</th>
                   <th className='p-4'>Date</th>
@@ -289,8 +352,17 @@ const Topup = () => {
               <tbody>
                 {paginatedRecords.map((record) => (
                   <tr key={record._id} className='border-b hover:bg-primary-dark'>
-                    <td className='p-4'>{record.user}</td>
-                    <td className='p-4'>{`$${parseFloat(record.amount).toLocaleString()}`}</td>
+                    <td className='p-4'>{record.user.fullName}</td>
+                    <td
+                      className={`p-4 ${
+                        record.amount < 0
+                          ? "text-error-dark"
+                          : record.amount > 0
+                          ? "text-success-dark"
+                          : "text-text-light"
+                      }`}>
+                      {`$${parseFloat(record.amount).toLocaleString()}`}
+                    </td>
                     <td className='p-4 flex-wrap'>{record.description}</td>
                     <td className='p-4'>{formatToNewYorkTime(record.createdAt)}</td>
                     <td className='p-4'>

@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from "react-router-dom";
 import NotificationDisplay from "./layout/NotificationDisplay";
 import Dashboard from "./app/Dashboard";
 import Admins from "./app/Admins";
@@ -82,6 +82,18 @@ export default function Router() {
         { path: "manage-users/kyc/:kycDetails", element: <ViewKYC /> },
       ],
     },
+    // {
+    //   path: "/",
+    //   element: (
+    //     <CheckAuth>
+    //       <Auth />
+    //     </CheckAuth>
+    //   ),
+    //   children: [
+    //     { path: "", element: <Login /> },
+    //     { path: "login", element: <Login /> },
+    //   ],
+    // },
     {
       path: "/",
       element: (
@@ -90,7 +102,7 @@ export default function Router() {
         </CheckAuth>
       ),
       children: [
-        { path: "", element: <Login /> },
+        { path: "", element: <Navigate to='login' replace /> },
         { path: "login", element: <Login /> },
       ],
     },

@@ -163,27 +163,32 @@ const createRefreshTokenEntry = async (tokenData) => {
  * @param {Object} details - The details of the top-up.
  * @param {number} details.amount - The amount to top up.
  * @param {string} details.description - The description of the top-up.
- * @param {string} details.userId - The ID of the user to top up.
+ * @param {string} details.userDetails - The details of the user to top up.
  * @returns {Object|boolean} - The updated user, or false if an error occurred.
  */
 const createTopup = async (details = {}) => {
-    const { amount, description, userId } = details;
-    const requiredFields = ['amount', 'description', 'userId'];
+    const { amount, description, userDetails, affectedBalance } = details;
+    const requiredFields = ['amount', 'description', 'userDetails', 'affectedBalance'];
     const missingFields = requiredFields.filter(field => !details[field]);
 
     if (missingFields.length > 0) {
         console.warn(`Missing ${missingFields.length} required fields:\n${missingFields.join(', ')}`);
         return false;
     }
+    const allowedBalances = ['balance', 'totalDeposit', 'totalBonus', 'profits', 'withdrawn', 'referral'];
 
-    const user = await User.findById(userId);
+    if (!allowedBalances.includes(affectedBalance)) {
+        console.warn("Invalid affected balance type.");
+        return false
+    }
+    const user = await User.findById(userDetails.userId);
     if (!user) {
         console.warn('User not found');
         return false;
     }
 
     const topup = new Topup({
-        amount, description, user: userId
+        amount, description, user: userDetails, affectedBalance
     });
 
     try {
@@ -191,23 +196,19 @@ const createTopup = async (details = {}) => {
         if (!result) {
             throw new Error('Topup was not saved.');
         }
-
-        const newBalance = parseFloat(user.wallet.balance) + parseFloat(amount);
         const newTopup = parseFloat(user.wallet.topup) + parseFloat(amount);
-const newProfits = parseFloat(user.wallet.profits) + parseFloat(amount);
+        const newAffectedBalance = parseFloat(user.wallet[affectedBalance]) + parseFloat(amount);
 
         const updatedUser = await User.findByIdAndUpdate(
-            userId,
+            userDetails.userId,
             {
                 $set: {
-                    'wallet.balance': newBalance,
                     'wallet.topup': newTopup,
-                    'wallet.profits': newProfits
+                    [`wallet.${affectedBalance}`]: newAffectedBalance, // Dynamic key syntax
                 }
             },
             { new: true, runValidators: true }
         );
-
         return updatedUser;
     } catch (error) {
         console.error('Error creating topup:', {

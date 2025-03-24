@@ -8,11 +8,19 @@ const CheckAuth = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     if (location.pathname.startsWith("/login")) {
+  //       navigate("/app/dashboard", { replace: true });
+  //     } else if (location.pathname.startsWith("/")) {
+  //       navigate("/app/dashboard", { replace: true });
+  //     }
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [accessToken, location.pathname]);
   useEffect(() => {
-    if (accessToken) {
-      if (location.pathname.startsWith("/login")) {
-        navigate("/app/dashboard", { replace: true });
-      }
+    if (accessToken && (location.pathname === "/" || location.pathname === "/login")) {
+      navigate("/app/dashboard", { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, location.pathname]);
