@@ -116,7 +116,7 @@ const Billing = () => {
   return (
     <div className='space-y-4'>
       {/* Billing options */}
-      <div className='w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-5 gap-x-0 gap-y-5'>
+      <div className='w-full grid grid-cols-1 md:grid-cols-2 md:gap-2 gap-x-0 gap-y-5'>
         {isLoading ? (
           <div className='deposit-box'>
             <div className='absolute -top-[25%] left-[35%]'>
@@ -132,7 +132,7 @@ const Billing = () => {
               key={option?.address || index}
               className={`deposit-box cursor-pointer ${
                 selectedDetails?.address === option?.address
-                  ? "scale-105 transition-all duration-75 ease-in-out !bg-primary-light text-text-dark shadow-lg"
+                  ? "!bg-primary-light text-text-dark shadow-lg"
                   : ""
               }`}
               onClick={() => handleSelectOption(option)}>

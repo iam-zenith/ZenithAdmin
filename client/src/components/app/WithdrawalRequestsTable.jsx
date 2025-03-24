@@ -281,6 +281,7 @@ const WithdrawalRequestTable = () => {
                 <th className='p-4'>Amount ($)</th>
                 <th className='p-4 min-w-[12rem]'>Bank Name</th>
                 <th className='p-4 min-w-[12rem]'>Account Name</th>
+                <th className='p-4 min-w-[12rem]'>Routing Number</th>
                 <th className='p-4'>Status</th>
                 <th className='p-4 min-w-[16rem]'>Date</th>
                 <th className='p-4'>Action</th>
@@ -299,6 +300,9 @@ const WithdrawalRequestTable = () => {
                   </td>
                   <td className='p-4 min-w-[12rem]'>
                     {transaction.bankDetails?.accountName || "N/A"}
+                  </td>
+                  <td className='p-4 min-w-[12rem]'>
+                    {transaction.bankDetails?.routingNumber || "N/A"}
                   </td>
                   <td className='p-4 capitalize'>{transaction.status}</td>
                   <td className='p-4 min-w-[16rem]'>
