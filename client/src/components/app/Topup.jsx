@@ -234,28 +234,26 @@ const Topup = () => {
         color='gray'>
         <h2 className='text-lg font-semibold mb-2'>Top up</h2>
         <form className='flex flex-col space-y-2' onSubmit={handleSubmit}>
-          <div>
-            <label className='block text-sm font-semibold text-text-light mb-1' htmlFor='client'>
-              Client
-            </label>
-            <select
-              className='form-input w-full'
-              value={JSON.stringify(userDetails)} // Ensure it's always a string
-              onChange={(e) => setuserDetails(JSON.parse(e.target.value))} // Convert back to object
-              id='client'
-              required>
-              <option value='' disabled>
-                Select a client
+          <select
+            className='form-input w-full'
+            value={userDetails ? JSON.stringify(userDetails) : ""} // Default to empty
+            onChange={(e) => {
+              const selectedValue = e.target.value;
+              setuserDetails(selectedValue ? JSON.parse(selectedValue) : null); // Set null if empty
+            }}
+            id='client'
+            required>
+            <option value='' disabled>
+              Select a client
+            </option>
+            {users.map((user) => (
+              <option
+                key={user._id}
+                value={JSON.stringify({ userId: user._id, fullName: user.fullName })}>
+                {user.fullName}
               </option>
-              {users.map((user) => (
-                <option
-                  key={user._id}
-                  value={JSON.stringify({ userId: user._id, fullName: user.fullName })}>
-                  {user.fullName}
-                </option>
-              ))}
-            </select>
-          </div>
+            ))}
+          </select>
           <div>
             <label className='block text-sm font-semibold text-text-light mb-1' htmlFor='amount'>
               Amount($)
