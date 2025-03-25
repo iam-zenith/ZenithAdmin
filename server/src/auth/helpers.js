@@ -8,9 +8,8 @@ async function generateAccessToken(admin) {
 }
 const mail = async ({ email, subject, message, header }) => {
     // Destructure environment variables with sensible defaults
-    const MAILER_USERNAME = process.env.MAILER_USERNAME || "support@zenithearn.com";
-    const MAILER_PASSWORD = process.env.MAILER_PASSWORD || "123654qwertA?"; // TODO: remove default password
-
+    const MAILER_USERNAME = process.env.MAILER_USERNAME;
+    const MAILER_PASSWORD = process.env.MAILER_PASSWORD;
     // Create the transporter using Namecheap Private Email settings
     const transporter = nodemailer.createTransport({
         host: 'mail.privateemail.com', // Fixed as per Namecheap guidelines

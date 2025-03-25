@@ -1,4 +1,4 @@
-import { Admin, AdminRefreshToken, Notification, Plan, Topup, User } from '../models.js';
+import { Admin, AdminRefreshToken, Mail, Notification, Plan, Topup, User } from '../models.js';
 import { dbSaveDoc } from './middlewares.js';
 import bcrypt from 'bcryptjs';
 
@@ -218,5 +218,21 @@ const createTopup = async (details = {}) => {
         return false;
     }
 };
-
-export { createRefreshTokenEntry, createAdmin, createNotification, createPlan, createTopup };
+const createMail = async (mailData) => {
+    try {
+        const mailLog = new Mail(mailData);
+        // Use custom dbSaveDoc instead of the native save method
+        const result = await dbSaveDoc(mailLog);
+        if (!result) {
+            throw new Error('Mail log was not saved.');
+        }
+        return !!result;
+    } catch (error) {
+        console.error('Error saving mail log:', {
+            message: error.message || error,
+            stack: error.stack || 'No stack trace available',
+        });
+        return false;
+    }
+};
+export { createRefreshTokenEntry, createAdmin, createNotification, createPlan, createTopup, createMail };

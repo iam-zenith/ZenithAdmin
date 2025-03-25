@@ -1,5 +1,5 @@
 import { isValidObjectId } from 'mongoose';
-import { Admin, AdminRefreshToken, Billing, Investment, KYC, models, Notification, Plan, User } from '../models.js';
+import { Admin, AdminRefreshToken, Billing, Investment, KYC, Mail, models, Notification, Plan, User } from '../models.js';
 
 /**
  * Delete an admin refresh token entry.
@@ -115,6 +115,35 @@ const deleteNotification = async (_id) => {
         }
     } catch (error) {
         console.error('Error deleting notification:', {
+            message: error.message || error,
+            stack: error.stack || 'No stack trace available',
+        });
+        return false;
+    }
+};
+/**
+ * Delete a mail log.
+ * @param {string} _id - The ID of the mail log to delete.
+ * @returns {boolean} - True if the mail log was deleted, false otherwise.
+ */
+const deleteMailLog = async (_id) => {
+    try {
+        // Validate _id as a valid MongoDB ObjectId
+        if (!isValidObjectId(_id)) {
+            throw new Error('Invalid _id provided');
+        }
+
+        // Attempt to delete the mailLog by ID
+        const result = await Mail.findByIdAndDelete(_id);
+
+        if (result) {
+            return true;
+        } else {
+            console.warn(`Mail log not found or not deleted: ${_id}`);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error deleting mail log:', {
             message: error.message || error,
             stack: error.stack || 'No stack trace available',
         });
@@ -275,5 +304,6 @@ export {
     deleteInvestment,
     deleteUser,
     deleteKYC,
-    deleteAdmin
+    deleteAdmin,
+    deleteMailLog
 };

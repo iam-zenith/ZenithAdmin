@@ -5,9 +5,9 @@ import { uploadBilling, gfsBilling, gfsDeposits, gfsProfilePics, gfsKYC } from '
 import { closeLiveTrade, confirmDeposit, updateDepositEntry, updateDepositOption, updateInvestment, updateKYCRecord, updateLivetrade, updateUserFields, updateWhatsappNumber, updateWithdrawalEntry } from '../mongodb/methods/update.js';
 import { Readable } from 'stream';
 import mongoose, { isValidObjectId } from 'mongoose';
-import { deleteBillingOption, deleteNotification, deleteTransactionEntry, deletePlan, deleteInvestment, deleteUser, deleteKYC } from '../mongodb/methods/delete.js';
+import { deleteBillingOption, deleteNotification, deleteTransactionEntry, deletePlan, deleteInvestment, deleteUser, deleteKYC, deleteMailLog } from '../mongodb/methods/delete.js';
 import { User } from '../mongodb/models.js';
-import { createNotification, createPlan, createTopup } from '../mongodb/methods/create.js';
+import { createMail, createNotification, createPlan, createTopup } from '../mongodb/methods/create.js';
 import { mail } from '../auth/helpers.js';
 import { getSafeAdmin } from '../helpers.js';
 
@@ -352,7 +352,7 @@ Router.route('/notifications')
                 success: true,
             });
         } catch (error) {
-            console.error('Error in deleting billing option:', error);
+            console.error('Error in deleting notification:', error);
             return res.status(500).json({
                 message: 'An unexpected error occurred while deleting.',
             });
@@ -366,14 +366,11 @@ Router.route('/mailing')
         const invalidTargets = [];
         const matchedTargets = [];
 
-        // Remove duplicate entries from targets
+        // Remove duplicate entries
         const uniqueTargets = [...new Set(targets)];
 
-        // Validate each email address in the target array
-        const isValidEmail = (email) => {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        };
+        // Validate email addresses
+        const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
         uniqueTargets.forEach(target => {
             if (target === "*" || isValidEmail(target)) {
@@ -383,34 +380,27 @@ Router.route('/mailing')
             }
         });
 
-
         try {
+            let allUsers = false;
+
             if (targets.length === 1 && targets[0] === "*") {
-                // Get all users with an email
+                allUsers = true;
+                // Fetch all users with an email
                 const users = await User.find({ email: { $exists: true } });
-                users.forEach(user => {
-                    matchedTargets.push(user.email);
-                });
+                users.forEach(user => matchedTargets.push(user.email));
             } else {
-                // Check each valid email against the list of user.email in the database
+                // Fetch users matching valid targets
                 const users = await User.find({ email: { $in: validTargets } });
-                users.forEach(user => {
-                    matchedTargets.push(user.email);
-                });
+                users.forEach(user => matchedTargets.push(user.email));
             }
-            // Send emails to matched targets and collect results
+
+            // Send emails and collect results
             const mailingResults = await Promise.allSettled(
                 matchedTargets.map(email =>
-                    mail({
-                        email,
-                        subject,
-                        message,
-                        header: header
-                    })
+                    mail({ email, subject, message, header })
                 )
             );
 
-            // Analyze results
             const successfulEmails = mailingResults
                 .filter(result => result.status === 'fulfilled' && result.value.success)
                 .map(result => result.value.accepted)
@@ -423,21 +413,73 @@ Router.route('/mailing')
                     error: result.reason || result.value.error,
                 }));
 
-            res.status(200).json({
+            const responsePayload = {
                 message: 'Mailing completed',
-                invalidTargets: targets.length === 1 && targets[0] === "*" ? 0 : invalidTargets.length,
+                invalidTargets: allUsers ? 0 : invalidTargets.length,
                 success: successfulEmails.length > 0,
-                matchedTargets: targets.length === 1 && targets[0] === "*" ? "All users" : matchedTargets.length,
+                matchedTargets: allUsers ? "All users" : matchedTargets.length,
                 successfulEmails,
                 failedEmails,
+            };
+
+            // Save the mailing operation log
+            await createMail({
+                subject,
+                message,
+                header,
+                originalTargets: targets,
+                validTargets,
+                invalidTargets,
+                matchedTargets,
+                successfulEmails,
+                failedEmails,
+                success: successfulEmails.length > 0,
+                allUsers,
             });
+
+            res.status(200).json(responsePayload);
         } catch (error) {
             console.error('Error sending mail(s):', error);
             res.status(500).json({
                 message: 'An unexpected error occurred while sending mail(s).',
             });
         }
-    });
+    })
+    .get(authenticate, async (req, res) => {
+        try {
+            const mailLog = await findAny(15);
+            if (!mailLog) {
+                return res.status(404).json({ message: 'No mail log available' });
+            }
+            return res.status(200).json({ message: 'Mail logs found', mailLog });
+        } catch (error) {
+            console.error('Error in getting mail logs:', error);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    })
+    .delete(authenticate, async (req, res) => {
+        if (!isValidObjectId(req.body?._id)) {
+            return res.status(400).json({ message: 'Invalid _id provided' });
+        }
+        try {
+            const result = await deleteMailLog(req.body._id);
+
+            if (!result) {
+                return res.status(400).json({
+                    message: 'Delete request failed due to invalid data or server error.',
+                });
+            }
+            res.status(200).json({
+                message: 'Successfully deleted',
+                success: true,
+            });
+        } catch (error) {
+            console.error('Error in deleting mail log:', error);
+            return res.status(500).json({
+                message: 'An unexpected error occurred while deleting.',
+            });
+        }
+    })
 // Route to handle plans
 Router.route('/plans')
     .get(authenticate, async (req, res) => {
