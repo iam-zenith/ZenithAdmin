@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { formatToNewYorkTime } from "../../assets/helpers.js";
 import {
+  ArrowPathRoundedSquareIcon,
   CheckCircleIcon,
   ClockIcon,
   MagnifyingGlassIcon,
@@ -324,10 +325,20 @@ const WithdrawalRequestTable = () => {
                     {transaction.status !== "pending" && (
                       <ClockIcon
                         title='Mark as pending'
-                        className='h-5 w-5 hover:scale-110 transition-all cursor-help text-warning-dark'
+                        className='h-5 w-5 hover:scale-110 transition-all cursor-help text-warning-light'
                         onClick={(e) => {
                           e.stopPropagation(); // Prevents <tr>'s onClick from firing
                           changeState(transaction._id, "pending");
+                        }}
+                      />
+                    )}
+                    {transaction.status !== "pending" && (
+                      <ArrowPathRoundedSquareIcon
+                        title='Mark as processing'
+                        className='h-5 w-5 hover:scale-110 transition-all cursor-help text-warning-dark'
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevents <tr>'s onClick from firing
+                          changeState(transaction._id, "processing");
                         }}
                       />
                     )}
