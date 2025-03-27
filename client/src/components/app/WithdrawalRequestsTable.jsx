@@ -332,7 +332,7 @@ const WithdrawalRequestTable = () => {
                         }}
                       />
                     )}
-                    {transaction.status !== "pending" && (
+                    {transaction.status !== "processing" && (
                       <ArrowPathRoundedSquareIcon
                         title='Mark as processing'
                         className='h-5 w-5 hover:scale-110 transition-all cursor-help text-warning-dark'
