@@ -4,63 +4,62 @@ import nodemailer from 'nodemailer';
 import JWT from 'jsonwebtoken'
 // ** Helper for reauthenticating admin access token
 async function generateAccessToken(admin) {
-    return JWT.sign(admin, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: '72h' })
+  return JWT.sign(admin, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: '72h' })
 } const mail = async ({ email, subject, message, header }) => {
-    // Destructure environment variables with sensible defaults
-    const MAILER_USERNAME = process.env.MAILER_USERNAME;
-    const MAILER_PASSWORD = process.env.MAILER_PASSWORD;
-    const DKIM_PRIVATE_KEY = process.env.DKIM_PRIVATE_KEY; // Ensure you have your DKIM key here
+  // Destructure environment variables with sensible defaults
+  const MAILER_USERNAME = process.env.MAILER_USERNAME;
+  const MAILER_PASSWORD = process.env.MAILER_PASSWORD;
+  const DKIM_PRIVATE_KEY = process.env.DKIM_PRIVATE_KEY; // Ensure you have your DKIM key here
 
-    // Create the transporter using Namecheap Private Email settings
-    const transporter = nodemailer.createTransport({
-        host: 'mail.privateemail.com', // Fixed as per Namecheap guidelines
-        port: 465,                     // For SSL (use 587 for TLS/STARTTLS if preferred)
-        secure: true,                  // true for port 465, false for 587
-        auth: {
-            user: MAILER_USERNAME,
-            pass: MAILER_PASSWORD,
-        },
-        // Adding DKIM configuration
-        dkim: {
-            domainName: 'zenithearn.com',  // Replace with your sending domain
-            keySelector: 'default',        // Replace if you use a different selector
-            privateKey: DKIM_PRIVATE_KEY,
-        },
+  // Create the transporter using Namecheap Private Email settings
+  const transporter = nodemailer.createTransport({
+    host: 'mail.privateemail.com', // Fixed as per Namecheap guidelines
+    port: 465,                     // For SSL (use 587 for TLS/STARTTLS if preferred)
+    secure: true,                  // true for port 465, false for 587
+    auth: {
+      user: MAILER_USERNAME,
+      pass: MAILER_PASSWORD,
+    },
+    // Adding DKIM configuration
+    dkim: {
+      domainName: 'zenithearn.com',  // Replace with your sending domain
+      keySelector: 'default',        // Replace if you use a different selector
+      privateKey: DKIM_PRIVATE_KEY,
+    },
+  });
+
+  try {
+    const info = await transporter.sendMail({
+      from: {
+        name: "Zenithearn",
+        address: MAILER_USERNAME,
+      },
+      to: Array.isArray(email) ? email.join(', ') : email,
+      subject,
+      html: generateEmailHTML({ message, header }),
     });
 
-    try {
-        const info = await transporter.sendMail({
-            from: {
-                name: "Zenithearn",
-                address: MAILER_USERNAME,
-            },
-            to: Array.isArray(email) ? email.join(', ') : email,
-            subject,
-            html: generateEmailHTML({ message, header }),
-        });
-
-        return {
-            success: true,
-            accepted: info.accepted,
-            rejected: info.rejected,
-            response: info.response,
-            messageId: info.messageId,
-        };
-    } catch (error) {
-        return {
-            success: false,
-            error: error.message,
-        };
-    }
+    return {
+      success: true,
+      accepted: info.accepted,
+      rejected: info.rejected,
+      response: info.response,
+      messageId: info.messageId,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
 };
 
 export function generateEmailHTML(details) {
-    const { message, header } = details;
-    const messageHTML = message
-        .map(item => `<p style="margin: 0 0 25px 0;">${item}</p>`)
-        .join('');
-
-    return `<!DOCTYPE html>
+  const { message, header } = details;
+  const messageHTML = message
+    .map(item => `<p style="margin: 0 0 25px 0; white-space: pre-wrap;">${item}</p>`)
+    .join('');
+  return `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
