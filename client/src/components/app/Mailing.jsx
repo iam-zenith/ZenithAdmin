@@ -35,7 +35,8 @@ import Loader from "./subComponents/Loader";
 
 const Mailing = () => {
   const { addNotification } = useNotification();
-  const [message, setMessage] = useState("");
+  // Start with one paragraph
+  const [message, setMessage] = useState([""]);
   const [subject, setSubject] = useState("");
   const [header, setHeader] = useState("");
   const [targets, setTargets] = useState("");
@@ -49,6 +50,17 @@ const Mailing = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
+  const handleParagraphChange = (index, value) => {
+    // Update a specific paragraph while preserving the others
+    const updatedMessages = [...message];
+    updatedMessages[index] = value;
+    setMessage(updatedMessages);
+  };
+
+  const addParagraph = () => {
+    // Append an empty paragraph
+    setMessage((prev) => [...prev, ""]);
+  };
   // Update items per page based on window size
   const updateItemsPerPage = () => {
     const width = window.innerWidth;
@@ -204,7 +216,7 @@ const Mailing = () => {
         <h2 className='text-lg font-semibold mb-2'>Send Mail(s)</h2>
         <form onSubmit={handleMailing} className='flex flex-col space-y-2'>
           <div>
-            <label className='block text-sm font-semibold text-text-light mb-1' htmlFor='subject'>
+            <label htmlFor='subject' className='block text-sm font-semibold text-text-light mb-1'>
               Subject
             </label>
             <input
@@ -217,7 +229,7 @@ const Mailing = () => {
             />
           </div>
           <div>
-            <label className='block text-sm font-semibold text-text-light mb-1' htmlFor='header'>
+            <label htmlFor='header' className='block text-sm font-semibold text-text-light mb-1'>
               Header
             </label>
             <input
@@ -230,20 +242,28 @@ const Mailing = () => {
             />
           </div>
           <div>
-            <label className='block text-sm font-semibold text-text-light mb-1' htmlFor='message'>
+            <label htmlFor='message' className='block text-sm font-semibold text-text-light mb-1'>
               Message
             </label>
-            <textarea
-              className='form-input w-full'
-              value={message}
-              rows='3'
-              onChange={(e) => setMessage(e.target.value)}
-              id='message'
-              required
-            />
+            {message &&
+              message.map((paragraph, index) => (
+                <textarea
+                  key={index}
+                  className='form-input w-full mb-2'
+                  value={paragraph}
+                  maxLength={500}
+                  rows='3'
+                  onChange={(e) => handleParagraphChange(index, e.target.value)}
+                  placeholder={`Paragraph ${index + 1}`}
+                  required={index === 0} // require at least the first paragraph
+                />
+              ))}
+            <button type='button' onClick={addParagraph} className='primary-btn w-full'>
+              + Add Paragraph
+            </button>
           </div>
           <div>
-            <label className='block text-sm font-semibold text-text-light mb-1' htmlFor='targets'>
+            <label htmlFor='targets' className='block text-sm font-semibold text-text-light mb-1'>
               Targets (comma-separated email addresses)
             </label>
             <textarea
@@ -259,7 +279,6 @@ const Mailing = () => {
             {loading ? "Sending..." : "Send mail"}
           </button>
         </form>
-
         <div className='mt-4'>
           <h3 className='text-sm font-semibold'>Mailing Insights:</h3>
           <div className='flex flex-col sm:flex-row justify-between text-sm'>
@@ -326,7 +345,7 @@ const Mailing = () => {
                   <tr key={mailLog._id} className='border-b hover:bg-primary-dark'>
                     <td className='p-4 min-w-[16rem]'>{mailLog.subject}</td>
                     <td className='p-4 capitalize'>{mailLog.header}</td>
-                    <td className='p-4 min-w-[16rem]'>{mailLog.message}</td>
+                    <td className='p-4 min-w-[16rem]'>{mailLog.message[0] || mailLog.message}</td>
                     <td className='p-4'>
                       {mailLog.success ? (
                         <CheckCircleIcon
