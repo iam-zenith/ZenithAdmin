@@ -251,7 +251,6 @@ const Mailing = () => {
                   key={index}
                   className='form-input w-full mb-2'
                   value={paragraph}
-                  maxLength={500}
                   rows='3'
                   onChange={(e) => handleParagraphChange(index, e.target.value)}
                   placeholder={`Paragraph ${index + 1}`}
