@@ -45,6 +45,8 @@ app.set('trust proxy', 1); // Trust first proxy
 
 // Import routes and cronjobs
 import './src/cronjobs/refreshTokenJob.js';
+import './src/cronjobs/Investmentjob.js';
+import './src/cronjobs/ProfitsJob.js';
 import authRouter from './src/auth/JWT.js';
 import indexRouter from './src/routes/indexRouter.js';
 import imageRouter from './src/routes/imageRouter.js';

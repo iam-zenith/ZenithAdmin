@@ -9,4 +9,7 @@ cron.schedule('0 * * * *', async () => {
     } catch (error) {
         console.error('Error deleting expired admin tokens:', error);
     }
+}, {
+    scheduled: true,
+    timezone: "America/New_York"
 });
