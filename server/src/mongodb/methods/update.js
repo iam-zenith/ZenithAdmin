@@ -297,23 +297,13 @@ const closeLiveTrade = async (_id, updatedFields) => {
         if (!user) throw new Error('User not found');
 
         // Calculate updated wallet values for only profit since the cronjob will do the balance every 24 hours
-        // const updatedBalance = user.wallet.balance + trade.exitPrice;
-        const updatedProfits = trade.profitLoss > 0
-            ? user.wallet.profits + trade.profitLoss
-            : user.wallet.profits;
-
+        const updatedProfits = user.wallet.profits + trade.profitLoss;
         // Update wallet atomically
         const creditResult = await User.findByIdAndUpdate(
             user._id,
             { 'wallet.profits': updatedProfits },
             { new: true, runValidators: true }
         );
-        // const creditResult = await User.findByIdAndUpdate(
-        //     user._id,
-        //     { 'wallet.balance': updatedBalance, 'wallet.profits': updatedProfits },
-        //     { new: true, runValidators: true }
-        // );
-
         return creditResult ? trade : false;
     } catch (error) {
         console.error('Error closing livetrade:', error.message);
