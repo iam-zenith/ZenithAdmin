@@ -79,7 +79,7 @@ export function generateEmailHTML(details) {
           <td style="padding: 40px 25px; background-color: rgba(26,40,60,0.85);">
             <!-- Logo -->
             <div style="text-align: center; margin-bottom: 25px;">
-              <img src="https://www.zenithearn.com/logo.png" alt="ZenitEarn" 
+              <img src="https://www.zenithearn.com/logo.png" alt="ZenithEarn" 
                    style="width: 40px; height: 40px; display: inline-block;">
             </div>
 
@@ -135,7 +135,7 @@ export function generateEmailHTML(details) {
               </tr>
             </table>
             <p style="font-size: 12px; color: #8794A8; margin: 25px 0 0 0;">
-              © 2025 ZenitEarn. All rights reserved
+              © 2025 ZenithEarn. All rights reserved
             </p>
           </td>
         </tr>
