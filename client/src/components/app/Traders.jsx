@@ -39,15 +39,6 @@ import FetchWithAuth from "../auth/api";
 import { useNotification } from "../layout/NotificationHelper";
 import Loader from "./subComponents/Loader";
 import { CursorArrowRaysIcon, ExclamationTriangleIcon, PlusIcon } from "@heroicons/react/24/solid";
-// import {
-//   btcIcon,
-//   cashasppIcon,
-//   dogecoinIcon,
-//   ethIcon,
-//   ltcIcon,
-//   paypalIcon,
-//   traderIcon,
-// } from "../../assets/icons";
 import TraderForm from "./TraderForm";
 import TraderImg from "./subComponents/TraderImg";
 
@@ -101,7 +92,11 @@ const Traders = () => {
         {isLoading ? (
           <div className='deposit-box'>
             <div className='absolute top-[50%] left-[50%]'>
-              <img src={Placeholder10} alt='QR code' className='w-10 h-10 rounded-lg shadow-lg' />
+              <img
+                src={Placeholder10}
+                alt='Trader Img'
+                className='w-20 h-20 rounded-full shadow-lg'
+              />
             </div>
             <div className='text-lg font-semibold flex justify-center px-2 mt-6'>
               <Loader />
