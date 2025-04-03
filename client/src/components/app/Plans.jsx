@@ -213,7 +213,7 @@ const Plans = () => {
   }, [filteredPlans]);
 
   return (
-    <main className='grid md:grid-cols-5 grid-cols-1 gap-4 pb-2'>
+    <main className='grid md:grid-cols-5 grid-cols-1 gap-4 pb-4'>
       <Card
         className='profile-box flex flex-col space-y-4 col-span-1 md:col-span-2'
         variant='gradient'

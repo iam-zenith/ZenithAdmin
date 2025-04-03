@@ -6,18 +6,21 @@ import mongoose from 'mongoose';
 
 const Router = _Router();
 // Set up GridFS
-let gfsBilling, gfsDeposits, gfsProfilePics, gfsKYC;
+let gfsBilling, gfsDeposits, gfsProfilePics, gfsKYC, gfsTraderImg;
 mongoose.connection.once('open', () => {
     gfsBilling = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'billingOptions' });
     gfsDeposits = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'deposits' });
     gfsProfilePics = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'profile_pics' });
     gfsKYC = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'kyc' });
+    gfsTraderImg = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'traderImg' });
 });
 
 // Configure Multer for file uploads (store temporarily in memory)
 const storageBilling = multer.memoryStorage();
+const storageTrader = multer.memoryStorage();
 const storageDeposits = multer.memoryStorage();
 const uploadBilling = multer({ storageBilling });
+const uploadTraderImg = multer({ storageTrader });
 const uploadDeposits = multer({ storage: storageDeposits });
 // view deposit receipt
 Router.route('/image/deposit/:id')
@@ -34,6 +37,30 @@ Router.route('/image/deposit/:id')
 
         downloadStream.on('error', (err) => {
             console.error('Error retrieving deposit:', err);
+            res.status(404).json({ message: 'File not found' });
+        });
+
+        downloadStream.on('file', (file) => {
+            res.setHeader('Content-Type', file.contentType || 'application/octet-stream'); // Adjust MIME type as needed
+        });
+
+        downloadStream.pipe(res);
+    });
+// view trader img
+Router.route('/image/trader/:id')
+    .get((req, res) => {
+        const fileId = req.params.id;
+        // MongoDB ObjectId regex pattern
+        const objectIdRegex = /^[a-fA-F0-9]{24}$/;
+
+        // Validate fileId against the regex
+        if (!objectIdRegex.test(fileId)) {
+            return res.status(400).json({ message: 'Invalid fileId format' });
+        }
+        const downloadStream = gfsTraderImg.openDownloadStream(new mongoose.Types.ObjectId(fileId));
+
+        downloadStream.on('error', (err) => {
+            console.error('Error retrieving trader  img:', err);
             res.status(404).json({ message: 'File not found' });
         });
 
@@ -89,6 +116,6 @@ Router.route('/image/profile-pic/:id')
         downloadStream.pipe(res);
     });
 export {
-    gfsBilling, gfsDeposits, gfsProfilePics, gfsKYC, uploadDeposits, uploadBilling
+    gfsBilling, gfsDeposits, gfsProfilePics, gfsKYC, uploadDeposits, uploadBilling, gfsTraderImg, uploadTraderImg
 }
 export default Router;

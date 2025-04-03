@@ -25,6 +25,8 @@ import SingleUser from "./app/subComponents/SingleUser";
 import ViewKYC from "./app/subComponents/ViewKYC";
 import SingleTrade from "./app/subComponents/SingleTrade";
 import Signal from "./app/Signal";
+import CopyTrading from "./app/CopyTrading";
+import Traders from "./app/Traders";
 export default function Router() {
   const Layout = () => {
     return (
@@ -66,10 +68,12 @@ export default function Router() {
       children: [
         { path: "dashboard", element: <Dashboard /> },
         { path: "admins", element: <Admins /> },
+        { path: "traders", element: <Traders /> },
         { path: "deposits", element: <DepositsTable /> },
         { path: "withdrawals", element: <WithdrawalRequestsTable /> },
         { path: "plans", element: <Plans /> },
         { path: "trade", element: <LiveTradeTable /> },
+        { path: "copy-trade", element: <CopyTrading /> },
         { path: "kyc", element: <Kyc /> },
         { path: "whatsapp", element: <Whatsapp /> },
         { path: "users", element: <Users /> },
@@ -84,18 +88,6 @@ export default function Router() {
         { path: "manage-users/kyc/:kycDetails", element: <ViewKYC /> },
       ],
     },
-    // {
-    //   path: "/",
-    //   element: (
-    //     <CheckAuth>
-    //       <Auth />
-    //     </CheckAuth>
-    //   ),
-    //   children: [
-    //     { path: "", element: <Login /> },
-    //     { path: "login", element: <Login /> },
-    //   ],
-    // },
     {
       path: "/",
       element: (

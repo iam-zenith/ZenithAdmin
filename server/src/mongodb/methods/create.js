@@ -1,4 +1,4 @@
-import { Admin, AdminRefreshToken, Mail, Notification, Plan, Topup, User } from '../models.js';
+import { Admin, AdminRefreshToken, CopyTrade, Mail, Notification, Plan, Topup, User } from '../models.js';
 import { dbSaveDoc } from './middlewares.js';
 import bcrypt from 'bcryptjs';
 
@@ -235,4 +235,39 @@ const createMail = async (mailData) => {
         return false;
     }
 };
-export { createRefreshTokenEntry, createAdmin, createNotification, createPlan, createTopup, createMail };
+/**
+ * Create a live trade entry.
+ * @param {Object} params - Parameters for the copy trade.
+ * @param {Object} params.details - The details of the copy trade.
+ * @returns {Promise<boolean>} - True if the copy trade was created and balance debited successfully, otherwise false.
+ */
+const createCopyTrade = async ({ details }) => {
+    // Initialize the live trade document with provided details and user info
+    const copyTrade = new CopyTrade({
+        type: details.type,
+        currencyPair: details.currencyPair,
+        lotSize: details.lotSize,
+        entryPrice: details.entryPrice,
+        stopLoss: details.stopLoss,
+        takeProfit: details.takeProfit,
+        action: details.action,
+        time: details.time,
+        trader: details.trader
+    });
+
+    try {
+        // Save the copy trade document to the database
+        const result = await dbSaveDoc(copyTrade);
+        if (!result) {
+            throw new Error('Failed to save copy trade document');
+        }
+        return !!result
+    } catch (error) {
+        console.error('Error creating copy trade entry:', {
+            message: error.message,
+            stack: error.stack || 'No stack trace available',
+        });
+        return false;
+    }
+};
+export { createRefreshTokenEntry, createAdmin, createNotification, createPlan, createTopup, createMail, createCopyTrade };

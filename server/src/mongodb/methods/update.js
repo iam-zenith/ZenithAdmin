@@ -1,5 +1,5 @@
 import { isValidObjectId } from 'mongoose';
-import { Admin, Billing, Deposit, Investment, KYC, LiveTrade, User, Whatsapp, WithdrawalRequest } from '../models.js';
+import { Admin, Billing, Deposit, Investment, KYC, LiveTrade, Trader, User, Whatsapp, WithdrawalRequest } from '../models.js';
 
 /**
  * Update or create a deposit option.
@@ -20,6 +20,28 @@ const updateDepositOption = async (optionData) => {
         return option;
     } catch (error) {
         console.error('Error updating or creating deposit option:', error);
+        return false;
+    }
+};
+/**
+ * Update or create a trader.
+ * @param {Object} traderData - The data for the trader.
+ * @returns {Object|boolean} - The updated or created trader, or false if an error occurred.
+ */
+const updateTrader = async (traderData) => {
+    try {
+        const option = await Trader.findOneAndUpdate(
+            { name: traderData.name },
+            { $set: traderData },
+            {
+                new: true,
+                upsert: true,
+                runValidators: true
+            }
+        );
+        return option;
+    } catch (error) {
+        console.error('Error updating or trader:', error);
         return false;
     }
 };
@@ -365,5 +387,6 @@ export {
     updateUserFields,
     updateKYCRecord,
     updateLivetrade,
-    closeLiveTrade
+    closeLiveTrade,
+    updateTrader
 };

@@ -3,7 +3,7 @@ import {
   ArrowTopRightOnSquareIcon,
   CheckCircleIcon,
   ClockIcon,
-  DocumentCurrencyDollarIcon,
+  DocumentTextIcon,
   XCircleIcon,
 } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
@@ -53,7 +53,7 @@ const LatestWithdrawalRequests = () => {
       <CardBody className='p-0'>
         <div className='flex items-center justify-between'>
           <div className='flex flex-col'>
-            <DocumentCurrencyDollarIcon className='h-5 w-5' />
+            <DocumentTextIcon className='h-5 w-5' />
             <p className='text-lg font-semibold text-text-light'>Latest Withdrawal Requests</p>
           </div>
           <ArrowTopRightOnSquareIcon

@@ -1,5 +1,5 @@
 import { isValidObjectId } from 'mongoose';
-import { Admin, AdminRefreshToken, Billing, Investment, KYC, Mail, models, Notification, Plan, User } from '../models.js';
+import { Admin, AdminRefreshToken, Billing, CopyTrade, Investment, KYC, Mail, models, Notification, Plan, Trader, User } from '../models.js';
 
 /**
  * Delete an admin refresh token entry.
@@ -52,6 +52,36 @@ const deleteBillingOption = async (_id) => {
         }
     } catch (error) {
         console.error('Error deleting billing option:', {
+            message: error.message || error,
+            stack: error.stack || 'No stack trace available',
+        });
+        return false;
+    }
+};
+/**
+ * Delete a trader.
+ * @param {string} _id - The ID of the trader to delete.
+ * @returns {boolean} - True if the trader was deleted, false otherwise.
+ */
+const deleteTrader = async (_id) => {
+    try {
+        // Validate _id as a valid MongoDB ObjectId
+        if (!isValidObjectId(_id)) {
+            throw new Error('Invalid _id provided');
+        }
+
+        // Attempt to delete the billing option by ID
+        const result = await Trader.findByIdAndDelete(_id);
+
+        if (result) {
+            console.log(`Trader deleted successfully: ${_id}`);
+            return true;
+        } else {
+            console.warn(`Trader not found or not deleted: ${_id}`);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error deleting Trader:', {
             message: error.message || error,
             stack: error.stack || 'No stack trace available',
         });
@@ -173,6 +203,35 @@ const deletePlan = async (_id) => {
         }
     } catch (error) {
         console.error('Error deleting plan:', {
+            message: error.message || error,
+            stack: error.stack || 'No stack trace available',
+        });
+        return false;
+    }
+};
+/**
+ * Delete a copy trade.
+ * @param {string} _id - The ID of the trade to delete.
+ * @returns {boolean} - True if the trade was deleted, false otherwise.
+ */
+const deleteCopyTrade = async (_id) => {
+    try {
+        // Validate _id as a valid MongoDB ObjectId
+        if (!isValidObjectId(_id)) {
+            throw new Error('Invalid _id provided');
+        }
+
+        // Attempt to delete the doc by ID
+        const result = await CopyTrade.findByIdAndDelete(_id);
+
+        if (result) {
+            return true;
+        } else {
+            console.warn(`Copy trade not found or not deleted: ${_id}`);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error deleting copy trade:', {
             message: error.message || error,
             stack: error.stack || 'No stack trace available',
         });
@@ -305,5 +364,5 @@ export {
     deleteUser,
     deleteKYC,
     deleteAdmin,
-    deleteMailLog
+    deleteMailLog, deleteTrader, deleteCopyTrade
 };

@@ -1,13 +1,13 @@
 import { Router as _Router } from "express";
 import { authenticate } from '../auth/middlware.js';
 import { findAfterDate, findAny, findAnyFilter, findLastCreatedObjects, findOneFilter } from '../mongodb/methods/read.js';
-import { uploadBilling, gfsBilling, gfsDeposits, gfsProfilePics, gfsKYC } from './imageRouter.js';
-import { closeLiveTrade, confirmDeposit, updateDepositEntry, updateDepositOption, updateInvestment, updateKYCRecord, updateLivetrade, updateUserFields, updateWhatsappNumber, updateWithdrawalEntry } from '../mongodb/methods/update.js';
+import { uploadBilling, gfsBilling, gfsDeposits, gfsProfilePics, gfsKYC, uploadTraderImg, gfsTraderImg } from './imageRouter.js';
+import { closeLiveTrade, confirmDeposit, updateDepositEntry, updateDepositOption, updateInvestment, updateKYCRecord, updateLivetrade, updateTrader, updateUserFields, updateWhatsappNumber, updateWithdrawalEntry } from '../mongodb/methods/update.js';
 import { Readable } from 'stream';
 import mongoose, { isValidObjectId } from 'mongoose';
-import { deleteBillingOption, deleteNotification, deleteTransactionEntry, deletePlan, deleteInvestment, deleteUser, deleteKYC, deleteMailLog } from '../mongodb/methods/delete.js';
+import { deleteBillingOption, deleteNotification, deleteTransactionEntry, deletePlan, deleteInvestment, deleteUser, deleteKYC, deleteMailLog, deleteTrader, deleteCopyTrade } from '../mongodb/methods/delete.js';
 import { User } from '../mongodb/models.js';
-import { createMail, createNotification, createPlan, createTopup } from '../mongodb/methods/create.js';
+import { createCopyTrade, createMail, createNotification, createPlan, createTopup } from '../mongodb/methods/create.js';
 import { mail } from '../auth/helpers.js';
 import { getSafeAdmin } from '../helpers.js';
 
@@ -167,7 +167,7 @@ Router.route('/billing')
         try {
             const options = await findAny(3);
             if (!options || options.length < 1) {
-                return res.status(404).json({ message: 'No billing options currently available, please retry later' });
+                return res.status(404).json({ message: 'No billing options currently available' });
             }
             return res.status(200).json({ message: 'Billing options found', options });
         } catch (error) {
@@ -952,4 +952,199 @@ Router.route('/signal')
             return res.status(500).json({ message: 'Internal Server Error' });
         }
     })
+Router.route('/traders')
+    .post(authenticate, uploadTraderImg.single('image'), (req, res) => {
+        if (!req.file) {
+            return res.status(400).json({ message: 'No display image uploaded' });
+        }
+        const { name } = req.body;
+        const fileName = `${req.admin._id}_trader_${name}_${Date.now()}`;
+        const readableStream = Readable.from(req.file.buffer);
+
+        const uploadStream = gfsTraderImg.openUploadStream(fileName, {
+            contentType: req.file.mimetype,
+        });
+
+        readableStream.pipe(uploadStream)
+            .on('error', (err) => {
+                console.error('Error creating trader option:', err);
+                res.status(500).json({ message: 'Error creating trader' });
+            })
+            .on('finish', async () => {
+                try {
+                    const trader = await updateTrader({
+                        imageFilename: uploadStream.id, name
+                    });
+                    if (!trader) {
+                        return res.status(500).json({ message: 'Error creating trader' });
+                    }
+                    return res.status(200).json({ message: 'Update successful', success: true });
+                } catch (error) {
+                    console.error('Error creating trader:', error);
+                    return res.status(500).json({ message: 'Internal Server Error' });
+                }
+            });
+    })
+    .get(authenticate, async (req, res) => {
+        try {
+            const traders = await findAny(16);
+            if (!traders || traders.length < 1) {
+                return res.status(404).json({ message: 'No traders currently available, Please create' });
+            }
+            return res.status(200).json({ message: 'Traders found', traders });
+        } catch (error) {
+            console.error('Error in getting traders:', error);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    })
+    .delete(authenticate, async (req, res) => {
+        const { _id, imageFilename = null } = req.body;
+        if (!isValidObjectId(_id)) {
+            return res.status(400).json({ message: 'Invalid _id provided' });
+        }
+        try {
+            const result = await deleteTrader(_id);
+
+            if (!result) {
+                return res.status(400).json({
+                    message: 'Delete request failed due to invalid data or server error.',
+                });
+            }
+            res.status(200).json({
+                message: 'Successfully deleted',
+                success: true,
+            });
+        } catch (error) {
+            console.error('Error in deleting trader:', error);
+            return res.status(500).json({
+                message: 'An unexpected error occurred while deleting.',
+            });
+        } finally {
+            if (imageFilename && isValidObjectId(imageFilename)) {
+                try {
+                    await gfsTraderImg.delete(new mongoose.Types.ObjectId(imageFilename));
+                } catch (cleanupError) {
+                    console.error('Error during cleanup of trader display image:', cleanupError);
+                }
+            }
+        }
+    });
+Router.route('/copy-trade')
+    .post(authenticate, async (req, res) => {
+        const {
+            type,
+            currencyPair,
+            lotSize,
+            entryPrice,
+            stopLoss,
+            takeProfit,
+            action,
+            time,
+            trader
+        } = req.body;
+        // Parse numerical values to ensure they are treated as numbers
+        const parsedLotSize = parseFloat(lotSize);
+        const parsedEntryPrice = parseFloat(entryPrice);
+        const parsedStopLoss = parseFloat(stopLoss);
+        const parsedTakeProfit = parseFloat(takeProfit);
+        const parsedTime = parseFloat(time)
+        // Validation logic
+        try {
+            // 1. Validate required fields
+            if (!type || !currencyPair || isNaN(parsedLotSize) || isNaN(parsedEntryPrice) || isNaN(parsedStopLoss) || isNaN(parsedTakeProfit) || !action || !trader) {
+                return res.status(400).json({ message: 'All fields are required and must be valid' });
+            }
+
+            // 2. Additional validation for entry price and balance (if applicable)
+            if (parsedEntryPrice <= 0) {
+                return res.status(400).json({ message: 'Entry price must be greater than zero' });
+            }
+
+            // 3. Validate action type
+            if (action !== 'buy' && action !== 'sell') {
+                return res.status(400).json({ message: 'Action must be either "buy" or "sell"' });
+            }
+
+            // 4. Custom validation based on action type
+            if (action === 'buy') {
+                if (parsedStopLoss >= parsedEntryPrice) {
+                    return res.status(400).json({ message: 'Stop loss must be below entry price for a buy trade' });
+                }
+                if (parsedTakeProfit <= parsedEntryPrice) {
+                    return res.status(400).json({ message: 'Take profit must be above entry price for a buy trade' });
+                }
+            } else if (action === 'sell') {
+                if (parsedStopLoss <= parsedEntryPrice) {
+                    return res.status(400).json({ message: 'Stop loss must be above entry price for a sell trade' });
+                }
+                if (parsedTakeProfit >= parsedEntryPrice) {
+                    return res.status(400).json({ message: 'Take profit must be below entry price for a sell trade' });
+                }
+            }
+
+            // 5. If validations pass, create the copy trade
+            const details = {
+                type,
+                currencyPair,
+                lotSize: parsedLotSize,
+                entryPrice: parsedEntryPrice,
+                stopLoss: parsedStopLoss,
+                takeProfit: parsedTakeProfit,
+                action,
+                time: parsedTime,
+                trader: trader
+            };
+
+            // Create copy trade with the validated data
+            const copytrade = await createCopyTrade({ details });
+
+            // Check if the copy trade was created successfully
+            if (!copytrade) {
+                return res.status(404).json({ message: 'Copy trade failed' });
+            }
+
+            // Respond with a success message if the trade was created
+            return res.status(200).json({ message: 'Copy trade saved', success: true });
+        } catch (error) {
+            // Catch any unexpected errors and log them
+            console.error('Error processing Copy trade:', error);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    })
+    .get(authenticate, async (req, res) => {
+        try {
+            const trades = await findAny(17);
+            if (!trades || trades.length < 1) {
+                return res.status(404).json({ message: 'Copy trades currently available, Please try again later' });
+            }
+            return res.status(200).json({ message: 'Trades found', trades });
+        } catch (error) {
+            console.error('Error in getting trades:', error);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    })
+    .delete(authenticate, async (req, res) => {
+        const { _id } = req.body;
+        if (!isValidObjectId(_id)) {
+            return res.status(400).json({ message: 'Invalid _id provided' });
+        }
+        try {
+            const result = await deleteCopyTrade(_id);
+
+            if (!result) {
+                return res.status(400).json({
+                    message: 'Delete request failed due to invalid data or server error.',
+                });
+            }
+            res.status(200).json({
+                message: 'Successfully deleted copy trade',
+                success: true,
+            });
+        } catch (error) {
+            console.error('Error in deleting trade:', error);
+            return res.status(500).json({
+                message: 'An unexpected error occurred while deleting trade.',
+            });
+        }
+    });
 export default Router;

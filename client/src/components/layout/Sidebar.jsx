@@ -8,6 +8,7 @@ import {
   clockIcon,
   liveTradeIcon,
   plansIcon,
+  traderIcon,
   transactionIcon,
   whatsappIcon,
 } from "../../assets/icons";
@@ -29,6 +30,7 @@ import {
   IdentificationIcon,
   UserGroupIcon,
   UsersIcon,
+  DocumentCurrencyDollarIcon,
   BanknotesIcon,
   EnvelopeIcon,
   BellAlertIcon,
@@ -142,6 +144,12 @@ function SidebarContent() {
                 </ListItemPrefix>
                 Admins
               </ListItem>
+              <ListItem onClick={() => navigate("./traders")}>
+                <ListItemPrefix>
+                  <span className='h-5 w-5 scale-125'>{traderIcon}</span>
+                </ListItemPrefix>
+                Traders
+              </ListItem>
             </List>
           </AccordionBody>
         </Accordion>
@@ -249,6 +257,12 @@ function SidebarContent() {
             <span className='h-5 w-5 scale-125'>{plansIcon}</span>
           </ListItemPrefix>
           Plans
+        </ListItem>
+        <ListItem onClick={() => navigate("./copy-trade")}>
+          <ListItemPrefix>
+            <DocumentCurrencyDollarIcon className='h-4 w-4 scale-125' />
+          </ListItemPrefix>
+          Copy Trading
         </ListItem>
         <ListItem onClick={() => navigate("./mailing")}>
           <ListItemPrefix>
