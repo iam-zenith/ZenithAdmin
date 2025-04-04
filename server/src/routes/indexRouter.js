@@ -1115,7 +1115,7 @@ Router.route('/copy-trade')
         try {
             const trades = await findAny(17);
             if (!trades || trades.length < 1) {
-                return res.status(404).json({ message: 'Copy trades currently available, Please try again later' });
+                return res.status(404).json({ message: 'Copy trades currently unavailable, Please try again later' });
             }
             return res.status(200).json({ message: 'Trades found', trades });
         } catch (error) {
