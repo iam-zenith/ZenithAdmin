@@ -74,7 +74,6 @@ const deleteTrader = async (_id) => {
         const result = await Trader.findByIdAndDelete(_id);
 
         if (result) {
-            console.log(`Trader deleted successfully: ${_id}`);
             return true;
         } else {
             console.warn(`Trader not found or not deleted: ${_id}`);
