@@ -467,7 +467,8 @@ const traderSchema = new Schema({
         type: String,
         required: true,
         trim: true,
-    }, imageFilename: {
+    },
+    imageFilename: {
         type: String, default: null
     }
 }, { timestamps: true })
