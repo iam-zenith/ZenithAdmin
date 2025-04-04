@@ -222,9 +222,8 @@ const CopyTrade = () => {
                 Select a Trader
               </option>
               {Traders.map((trader) => (
-                <option
-                  key={trader._id}
-                  value={JSON.stringify({ _id: trader._id, name: trader.name })}>
+                <option key={trader._id} value={JSON.stringify(trader)}>
+                  {/* value={JSON.stringify({ _id: trader._id, name: trader.name })}> */}
                   {trader.name}
                 </option>
               ))}
