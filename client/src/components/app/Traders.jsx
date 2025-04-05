@@ -34,7 +34,7 @@
  * @returns {JSX.Element} The rendered component.
  */
 import { useEffect, useState } from "react";
-import { Placeholder10 } from "../../assets/utilities";
+// import { Placeholder10 } from "../../assets/utilities";
 import FetchWithAuth from "../auth/api";
 import { useNotification } from "../layout/NotificationHelper";
 import Loader from "./subComponents/Loader";
@@ -91,13 +91,6 @@ const Traders = () => {
       <div className='w-full grid grid-cols-1 md:grid-cols-2 md:gap-2 gap-x-0 gap-y-5'>
         {isLoading ? (
           <div className='deposit-box'>
-            <div className='absolute top-[50%] left-[50%]'>
-              <img
-                src={Placeholder10}
-                alt='Trader Img'
-                className='w-20 h-20 rounded-full shadow-lg'
-              />
-            </div>
             <div className='text-lg font-semibold flex justify-center px-2 mt-6'>
               <Loader />
             </div>
