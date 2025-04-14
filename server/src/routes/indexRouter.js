@@ -1034,7 +1034,6 @@ Router.route('/copy-trade')
         const {
             type,
             currencyPair,
-            lotSize,
             entryPrice,
             stopLoss,
             takeProfit,
@@ -1043,7 +1042,6 @@ Router.route('/copy-trade')
             trader
         } = req.body;
         // Parse numerical values to ensure they are treated as numbers
-        const parsedLotSize = parseFloat(lotSize);
         const parsedEntryPrice = parseFloat(entryPrice);
         const parsedStopLoss = parseFloat(stopLoss);
         const parsedTakeProfit = parseFloat(takeProfit);
@@ -1051,7 +1049,7 @@ Router.route('/copy-trade')
         // Validation logic
         try {
             // 1. Validate required fields
-            if (!type || !currencyPair || isNaN(parsedLotSize) || isNaN(parsedEntryPrice) || isNaN(parsedStopLoss) || isNaN(parsedTakeProfit) || !action || !trader) {
+            if (!type || !currencyPair || isNaN(parsedEntryPrice) || isNaN(parsedStopLoss) || isNaN(parsedTakeProfit) || !action || !trader) {
                 return res.status(400).json({ message: 'All fields are required and must be valid' });
             }
 
@@ -1086,7 +1084,6 @@ Router.route('/copy-trade')
             const details = {
                 type,
                 currencyPair,
-                lotSize: parsedLotSize,
                 entryPrice: parsedEntryPrice,
                 stopLoss: parsedStopLoss,
                 takeProfit: parsedTakeProfit,

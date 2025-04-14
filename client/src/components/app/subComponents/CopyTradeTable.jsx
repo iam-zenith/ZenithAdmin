@@ -170,7 +170,6 @@ const CopyTradeTable = () => {
                 <th className='p-4'>Currency Pair</th>
                 <th className='p-4'>Timing (Hours)</th>
                 <th className='p-4'>Action</th>
-                <th className='p-4'>Lot Size</th>
                 <th className='p-4'>Entry Price</th>
                 <th className='p-4'>Stop Loss</th>
                 <th className='p-4'>Take Profit</th>
@@ -187,7 +186,6 @@ const CopyTradeTable = () => {
                   <td className='p-4'>{trade.currencyPair}</td>
                   <td className='p-4'>{trade.time}</td>
                   <td className='p-4 capitalize'>{trade.action}</td>
-                  <td className='p-4'>{trade.lotSize}</td>
                   <td className='p-4'>${parseFloat(trade.entryPrice).toLocaleString()}</td>
                   <td className='p-4'>${parseFloat(trade.stopLoss).toLocaleString()}</td>
                   <td className='p-4'>${parseFloat(trade.takeProfit).toLocaleString()}</td>

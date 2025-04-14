@@ -246,7 +246,6 @@ const createCopyTrade = async ({ details }) => {
     const copyTrade = new CopyTrade({
         type: details.type,
         currencyPair: details.currencyPair,
-        lotSize: details.lotSize,
         entryPrice: details.entryPrice,
         stopLoss: details.stopLoss,
         takeProfit: details.takeProfit,
