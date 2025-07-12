@@ -326,7 +326,7 @@ const SendNotification = () => {
             <Loader />
           ) : (
             <table className='w-full text-left text-sm'>
-              <thead className='bg-primary-mild'>
+              <thead className='bg-primary-light'>
                 <tr>
                   <th className='p-4 min-w-[16rem]'>Message</th>
                   <th className='p-4'>Type</th>

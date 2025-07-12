@@ -162,7 +162,7 @@ const CopyTradeTable = () => {
           <Loader />
         ) : (
           <table className='w-full text-left text-sm'>
-            <thead className='bg-primary-mild'>
+            <thead className='bg-primary-light'>
               <tr>
                 <th className='p-4 max-w-[16rem] text-nowrap'>Trader</th>
                 <th className='p-4'>Trade Type</th>

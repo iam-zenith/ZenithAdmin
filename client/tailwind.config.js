@@ -7,8 +7,8 @@ module.exports = withMT({
     extend: {
       colors: {
         primary: {
-          dark: '#0847A8',     // Bitbucket deep navy blue
-          default: '#0166FF',  // Bitbucket brand blue
+          dark: '#01296E',
+          default: '#003689',
           light: '#4C9AFF',    // Lighter blue
           mild: '#B3D4FF',     // Pale blue for soft backgrounds
         },

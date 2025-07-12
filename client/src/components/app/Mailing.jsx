@@ -320,7 +320,7 @@ const Mailing = () => {
             <Loader />
           ) : (
             <table className='w-full text-left text-sm'>
-              <thead className='bg-primary-mild'>
+              <thead className='bg-primary-light'>
                 <tr>
                   <th className='p-4 min-w-[16rem]'>Subject</th>
                   <th className='p-4 min-w-[16rem]'>Header</th>
