@@ -59,7 +59,7 @@ const LatestLiveTrade = () => {
     },
   ];
   return (
-    <Card className='dashboard-box flex flex-col h-full' variant='gradient' color='gray'>
+    <Card className='dashboard-box flex flex-col h-full' variant='gradient'>
       <CardBody className='p-0'>
         <div className='flex items-center justify-between'>
           <div className='flex flex-col'>
@@ -83,9 +83,7 @@ const LatestLiveTrade = () => {
                     <Typography className='text-text-light' variant='h6'>
                       ${parseFloat(entryPrice).toLocaleString()}
                     </Typography>
-                    <Typography variant='small' color='gray'>
-                      {formatToNewYorkTime(createdAt)}
-                    </Typography>
+                    <Typography variant='small'>{formatToNewYorkTime(createdAt)}</Typography>
                   </div>
                 </div>
                 <Typography className='text-text-light' variant='h6'>

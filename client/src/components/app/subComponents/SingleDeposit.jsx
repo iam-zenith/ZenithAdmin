@@ -270,7 +270,7 @@ export default function SingleDeposit() {
                   ? "text-success-dark"
                   : parsedTransaction?.bonus < 0
                   ? "text-error-dark"
-                  : "text-primary-light"
+                  : "text-text-light"
               }`}>
               {` ${parsedTransaction?.bonus > 0 ? "+$" : "$"}${parseFloat(
                 parsedTransaction?.bonus
@@ -281,14 +281,14 @@ export default function SingleDeposit() {
             {renderIcon(parsedTransaction.option)}
           </IconButton>
         </div>
-        <Typography className='text-sm text-primary-light'>Deposit details.</Typography>
+        <Typography className='text-sm text-text-light'>Deposit details.</Typography>
         <div className='my-2 flex flex-col space-y-2'>
           <p>
-            <strong className='text-primary-light'>Transaction ID:</strong> {parsedTransaction._id}
+            <strong className='text-text-light'>Transaction ID:</strong> {parsedTransaction._id}
           </p>
           <div className='flex flex-row justify-between'>
             <p>
-              <strong className='text-primary-light'>Client ID:</strong> {parsedTransaction.user}
+              <strong className='text-text-light'>Client ID:</strong> {parsedTransaction.user}
             </p>
             {copied ? (
               <ClipboardDocumentCheckIcon className='h-7 w-7 text-success-dark' title='Copied' />
@@ -301,7 +301,7 @@ export default function SingleDeposit() {
             )}
           </div>
           <p>
-            <strong className='text-primary-light'>Date:</strong>{" "}
+            <strong className='text-text-light'>Date:</strong>{" "}
             {formatToNewYorkTime(parsedTransaction.createdAt)}
           </p>
           <form>
@@ -317,7 +317,7 @@ export default function SingleDeposit() {
               onChange={(e) => setAmount(e.target.value)}
             />
             <p className='mt-1'>
-              <strong className='text-primary-light'>Calculated added bonus: </strong>
+              <strong className='text-text-light'>Calculated added bonus: </strong>
               <span
                 className={bonus > 0 ? "text-success-dark" : bonus < 0 ? "text-error-dark" : ""}>
                 {`${bonus > 0 ? "+$" : "$"}${bonus}`}

@@ -141,7 +141,7 @@ export default function LatestDeposit() {
   };
 
   return (
-    <Card className='dashboard-box flex flex-col md:flex-row !p-0' variant='gradient' color='gray'>
+    <Card className='dashboard-box flex flex-col md:flex-row !p-0' variant='gradient'>
       <CardHeader
         shadow={false}
         floated={false}
@@ -190,7 +190,7 @@ export default function LatestDeposit() {
                       ? "text-success-dark"
                       : deposit?.bonus < 0
                       ? "text-error-dark"
-                      : "text-primary-light"
+                      : "text-text-light"
                   }`}>
                   {deposit &&
                     `${deposit?.bonus > 0 ? "+$" : "$"}${parseFloat(
@@ -202,11 +202,11 @@ export default function LatestDeposit() {
 
             <div className='my-2 flex flex-col space-y-2'>
               <p>
-                <strong className='text-primary-light'>Transaction ID:</strong> {deposit._id}
+                <strong className='text-text-light'>Transaction ID:</strong> {deposit._id}
               </p>
               <div className='flex flex-row justify-between'>
                 <p>
-                  <strong className='text-primary-light'>Client ID:</strong> {deposit.user}
+                  <strong className='text-text-light'>Client ID:</strong> {deposit.user}
                 </p>
                 {copied ? (
                   <ClipboardDocumentCheckIcon
@@ -222,7 +222,7 @@ export default function LatestDeposit() {
                 )}
               </div>
               <p>
-                <strong className='text-primary-light'>Date:</strong>{" "}
+                <strong className='text-text-light'>Date:</strong>{" "}
                 {formatToNewYorkTime(deposit.createdAt)}
               </p>
             </div>

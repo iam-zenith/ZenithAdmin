@@ -55,10 +55,10 @@ const SingleUser = () => {
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4'>
-      <Card className='w-full shadow-lg text-text-light ' variant='gradient' color='gray'>
-        <CardHeader floated={false} color='blue-gray' className='m-0'>
+      <Card className='w-full shadow-lg bg-primary-default text-text-light ' variant='gradient'>
+        <CardHeader floated={false} className='m-0'>
           <ProfilePic imageId={parsedUser?.imageFilename} ref={imageRef} />
-          <div className='absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent to-black/60' />
+          <div className='absolute inset-0 h-full w-full' />
           <IconButton
             variant='text'
             className='!absolute top-4 right-4 rounded-full'
@@ -73,13 +73,13 @@ const SingleUser = () => {
           </IconButton>
         </CardHeader>
       </Card>
-      <Card className='w-full shadow-lg text-text-light' variant='gradient' color='gray'>
+      <Card className='w-full shadow-lg bg-primary-default text-text-light' variant='gradient'>
         <CardBody>
-          <Typography className='text-sm text-primary-light'>User Details</Typography>
+          <Typography className='text-sm text-text-light'>User Details</Typography>
           <div className='my-2 flex flex-col space-y-2'>
             <div className='flex flex-row justify-between'>
               <p>
-                <strong className='text-primary-light'>Client ID:</strong> {parsedUser._id}
+                <strong className='text-text-light'>Client ID:</strong> {parsedUser._id}
               </p>
               {copiedText === parsedUser._id ? (
                 <ClipboardDocumentCheckIcon className='h-7 w-7 text-success-dark' />
@@ -91,89 +91,89 @@ const SingleUser = () => {
               )}
             </div>
             <p>
-              <strong className='text-primary-light'>Full Name:</strong> {parsedUser.fullName}
+              <strong className='text-text-light'>Full Name:</strong> {parsedUser.fullName}
             </p>
             <p>
-              <strong className='text-primary-light'>Email:</strong> {parsedUser.email}
+              <strong className='text-text-light'>Email:</strong> {parsedUser.email}
             </p>
             <p>
-              <strong className='text-primary-light'>Phone Number:</strong> {parsedUser.phoneNumber}
+              <strong className='text-text-light'>Phone Number:</strong> {parsedUser.phoneNumber}
             </p>
             <p className='capitalize'>
-              <strong className='text-primary-light'>Gender:</strong> {parsedUser.gender}
+              <strong className='text-text-light'>Gender:</strong> {parsedUser.gender}
             </p>
             <p>
-              <strong className='text-primary-light'>Country:</strong> {parsedUser.country}
+              <strong className='text-text-light'>Country:</strong> {parsedUser.country}
             </p>
           </div>
         </CardBody>
       </Card>
-      <Card className='w-full shadow-lg text-text-light' variant='gradient' color='gray'>
+      <Card className='w-full shadow-lg bg-primary-default text-text-light' variant='gradient'>
         <CardBody>
-          <Typography className='text-sm text-primary-light'>Wallet</Typography>
+          <Typography className='text-sm text-text-light'>Wallet</Typography>
           <div className='my-2 flex flex-col space-y-2'>
             <p>
-              <strong className='text-primary-light'>Account Balance:</strong>{" "}
+              <strong className='text-text-light'>Account Balance:</strong>{" "}
               {`$${parseFloat(parsedUser.wallet.balance).toLocaleString()}`}
             </p>
             <p>
-              <strong className='text-primary-light'>Total Deposit:</strong>{" "}
+              <strong className='text-text-light'>Total Deposit:</strong>{" "}
               {`$${parseFloat(parsedUser.wallet.totalDeposit).toLocaleString()}`}
             </p>
             <p>
-              <strong className='text-primary-light'>Total Bonus:</strong>{" "}
+              <strong className='text-text-light'>Total Bonus:</strong>{" "}
               {`$${parseFloat(parsedUser.wallet.totalBonus).toLocaleString()}`}
             </p>
             <p>
-              <strong className='text-primary-light'>Total Withdrawal:</strong>{" "}
+              <strong className='text-text-light'>Total Withdrawal:</strong>{" "}
               {`$${parseFloat(parsedUser.wallet.withdrawn).toLocaleString()}`}
             </p>
             <p>
-              <strong className='text-primary-light'>Total Profits:</strong>{" "}
+              <strong className='text-text-light'>Total Profits:</strong>{" "}
               {`$${parseFloat(parsedUser.wallet.profits).toLocaleString()}`}
             </p>
             <p>
-              <strong className='text-primary-light'>Total Referrals:</strong>{" "}
+              <strong className='text-text-light'>Total Referrals:</strong>{" "}
               {`$${parseFloat(parsedUser.wallet.referral).toLocaleString()}`}
             </p>
           </div>
         </CardBody>
       </Card>
 
-      <Card className='w-full shadow-lg text-text-light' variant='gradient' color='gray'>
+      <Card className='w-full shadow-lg bg-primary-default text-text-light' variant='gradient'>
         <CardBody>
-          <Typography className='text-sm text-primary-light'>Metrics and Monitoring</Typography>
+          <Typography className='text-sm text-text-light'>Metrics and Monitoring</Typography>
           <div className='my-2 flex flex-col space-y-2'>
             <p>
-              <strong className='text-primary-light'>Active:</strong>{" "}
+              <strong className='text-text-light'>Active:</strong>{" "}
               {parsedUser.active ? "Yes" : "No"}
             </p>
             <p>
-              <strong className='text-primary-light'>Last Seen:</strong>{" "}
+              <strong className='text-text-light'>Last Seen:</strong>{" "}
               {formatToNewYorkTime(parsedUser.lastSeen)}
             </p>
             <p>
-              <strong className='text-primary-light'>Registered:</strong>{" "}
+              <strong className='text-text-light'>Registered:</strong>{" "}
               {formatToNewYorkTime(parsedUser.createdAt)}
             </p>
             <p>
-              <strong className='text-primary-light'>Last Updated At:</strong>{" "}
+              <strong className='text-text-light'>Last Updated At:</strong>{" "}
               {formatToNewYorkTime(parsedUser.updatedAt)}
             </p>
             <p>
-              <strong className='text-primary-light'>Last Password Change:</strong>{" "}
+              <strong className='text-text-light'>Last Password Change:</strong>{" "}
               {formatToNewYorkTime(parsedUser.lastPasswordChange)}
             </p>
           </div>
         </CardBody>
       </Card>
-      <Card className='w-full shadow-lg text-text-light' variant='gradient' color='gray'>
+      <Card className='w-full shadow-lg bg-primary-default text-text-light' variant='gradient'>
         <CardBody>
-          <Typography className='text-sm text-primary-light'>Management and Others</Typography>
+          <Typography className='text-sm text-text-light'>Management and Others</Typography>
           <div className='my-2 flex flex-col space-y-2'>
             <div className='flex flex-row justify-between'>
               <p>
-                <strong className='text-primary-light'>KYC ID:</strong> {parsedUser.KYC}
+                <strong className='text-text-light'>KYC ID:</strong> {parsedUser.KYC}
               </p>
               {copiedText === parsedUser.KYC ? (
                 <ClipboardDocumentCheckIcon className='h-7 w-7 text-success-dark' />
@@ -185,11 +185,11 @@ const SingleUser = () => {
               )}
             </div>
             <p>
-              <strong className='text-primary-light'>Blocked:</strong>{" "}
+              <strong className='text-text-light'>Blocked:</strong>{" "}
               {parsedUser.blocked ? "Yes" : "No"}
             </p>
             <p>
-              <strong className='text-primary-light'>Referral Code:</strong>{" "}
+              <strong className='text-text-light'>Referral Code:</strong>{" "}
               {parsedUser.referralCode || "Nil"}
             </p>
           </div>

@@ -51,7 +51,7 @@ const LatestKYC = () => {
   }, [admin.lastSeen]); // Empty dependency array to run only on mount
 
   return (
-    <Card className='dashboard-box flex flex-col h-full' variant='gradient' color='gray'>
+    <Card className='dashboard-box flex flex-col h-full text-white' variant='gradient'>
       <CardBody className='p-0'>
         <div className='flex items-center justify-between'>
           <div className='flex flex-col'>
@@ -75,9 +75,7 @@ const LatestKYC = () => {
                     <Typography className='text-text-light' variant='h6'>
                       {type}
                     </Typography>
-                    <Typography variant='small' color='gray'>
-                      {formatToNewYorkTime(updatedAt)}
-                    </Typography>
+                    <Typography variant='small'>{formatToNewYorkTime(updatedAt)}</Typography>
                   </div>
                 </div>
                 <Typography className='text-text-light' variant='h6'>

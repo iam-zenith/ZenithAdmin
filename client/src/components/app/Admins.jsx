@@ -86,8 +86,7 @@ const Admins = () => {
       {/* Form to create new administrator */}
       <Card
         className='profile-box flex flex-col space-y-4 col-span-1 md:col-span-2'
-        variant='gradient'
-        color='gray'>
+        variant='gradient'>
         <h2 className='text-lg font-semibold mb-2'>Create new Administrator</h2>
         <form onSubmit={handleSubmit(handleAdmins)} className='flex flex-col space-y-4'>
           <div>
@@ -151,35 +150,34 @@ const Admins = () => {
       {/* Display current administrator info */}
       <Card
         className='profile-box flex flex-col space-y-4 col-span-1 md:col-span-3'
-        variant='gradient'
-        color='gray'>
+        variant='gradient'>
         <h2 className='text-lg font-semibold text-text-light mb-2'>Current Administrator Info</h2>
         <div className='space-y-4'>
           <p>
-            <strong className='text-primary-light'>Username:</strong> {admin?.username}
+            <strong className='text-text-light'>Username:</strong> {admin?.username}
           </p>
           <p>
-            <strong className='text-primary-light'>Admin Status:</strong>{" "}
+            <strong className='text-text-light'>Admin Status:</strong>{" "}
             {!admin?.blocked ? "Active" : "Blocked"}
           </p>
           <p>
-            <strong className='text-primary-light'>Created:</strong> {admin?.createdAt}
+            <strong className='text-text-light'>Created:</strong> {admin?.createdAt}
           </p>
           <p>
-            <strong className='text-primary-light'>Created by:</strong> {admin?.createdBy?.username}
+            <strong className='text-text-light'>Created by:</strong> {admin?.createdBy?.username}
           </p>
           {admin?.lastSeen && (
             <p>
-              <strong className='text-primary-light'>Last Seen:</strong> {admin?.lastSeen}
+              <strong className='text-text-light'>Last Seen:</strong> {admin?.lastSeen}
             </p>
           )}
-          <p className='text-sm text-primary-light mb-2'>Login Details</p>
+          <p className='text-sm text-text-light mb-2'>Login Details</p>
           <p>
-            <strong className='text-primary-light'>Last Login IP:</strong>{" "}
+            <strong className='text-text-light'>Last Login IP:</strong>{" "}
             {admin?.lastLoginDetails?.ipAddress}
           </p>
           <p>
-            <strong className='text-primary-light'>Last Login Device:</strong>{" "}
+            <strong className='text-text-light'>Last Login Device:</strong>{" "}
             {admin?.lastLoginDetails?.device}
           </p>
         </div>

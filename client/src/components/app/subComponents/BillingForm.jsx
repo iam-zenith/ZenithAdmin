@@ -187,9 +187,8 @@ const BillingForm = ({ detail, setsuccess }) => {
 
   return (
     <Card
-      className='w-full max-w-[96dvh] md:max-w-[36rem] mx-auto md:mx-0'
-      variant='gradient'
-      color='gray'>
+      className='w-full max-w-[96dvh] md:max-w-[36rem] mx-auto md:mx-0 bg-primary-default'
+      variant='gradient'>
       <CardBody className='text-text-light flex flex-col space-y-2'>
         <div className='flex justify-between'>
           <h3 className='font-semibold text-2xl capitalize'>{name || "New Option"}</h3>
@@ -207,7 +206,7 @@ const BillingForm = ({ detail, setsuccess }) => {
           </div>
         </div>
         {showPrompt && (
-          <p className='text-md text-primary-light mb-2'>
+          <p className='text-md text-text-light mb-2'>
             Using the same name (option name) will update the existing option with that name;
             otherwise, a new billing option will be created. Ensure uniqueness of addresses/account
             numbers as duplicates won&apos;t be added as new options. A new QR Code must be uploaded

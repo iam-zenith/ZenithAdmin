@@ -197,9 +197,8 @@ const InvestmentTable = () => {
 
   return (
     <Card
-      className='text-text-light rounded-md shadow-md md:col-span-5'
-      variant='gradient'
-      color='gray'>
+      className='text-text-light rounded-md shadow-md md:col-span-5 bg-primary-default'
+      variant='gradient'>
       <div className='p-4 flex flex-col md:flex-row justify-between'>
         <h2 className='text-lg font-semibold'>Investment History</h2>
         <div className='relative w-full max-w-sm md:ml-4 mt-2 md:mt-0'>
@@ -210,7 +209,7 @@ const InvestmentTable = () => {
             onChange={(e) => setInvestmentSearchQuery(e.target.value)}
             className='form-input w-full'
           />
-          <MagnifyingGlassIcon className='w-4 h-4 absolute top-1/2 right-3 transform -translate-y-1/2 text-primary-light' />
+          <MagnifyingGlassIcon className='w-4 h-4 absolute top-1/2 right-3 transform -translate-y-1/2 text-text-light' />
         </div>
       </div>
 

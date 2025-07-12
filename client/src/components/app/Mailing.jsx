@@ -211,8 +211,7 @@ const Mailing = () => {
     <main className='grid md:grid-cols-6 grid-cols-1 gap-4'>
       <Card
         className='profile-box flex flex-col space-y-4 col-span-1 md:col-span-2'
-        variant='gradient'
-        color='gray'>
+        variant='gradient'>
         <h2 className='text-lg font-semibold mb-2'>Send Mail(s)</h2>
         <form onSubmit={handleMailing} className='flex flex-col space-y-2'>
           <div>
@@ -302,8 +301,7 @@ const Mailing = () => {
       </Card>
       <Card
         className='bg-primary-default text-text-light rounded-md shadow-md md:col-span-4'
-        variant='gradient'
-        color='gray'>
+        variant='gradient'>
         <div className='p-4 flex flex-col md:flex-row justify-between'>
           <h2 className='text-lg font-semibold'>Mailing History</h2>
           <div className='relative w-full max-w-sm md:ml-4 mt-2 md:mt-0'>
@@ -314,7 +312,7 @@ const Mailing = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className='form-input w-full'
             />
-            <MagnifyingGlassIcon className='w-4 h-4 absolute top-1/2 right-3 transform -translate-y-1/2 text-primary-light' />
+            <MagnifyingGlassIcon className='w-4 h-4 absolute top-1/2 right-3 transform -translate-y-1/2 text-text-light' />
           </div>
         </div>
         <div className='overflow-x-auto'>

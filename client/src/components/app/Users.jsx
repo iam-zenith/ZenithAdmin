@@ -217,14 +217,13 @@ const User = () => {
 
   return (
     <Card
-      className='text-text-light w-full max-w-[96dvw] md:max-w-[95dvw] lg:max-w-[80dvw] rounded-md shadow-md mx-auto'
-      variant='gradient'
-      color='gray'>
+      className='text-text-light w-full max-w-[96dvw] md:max-w-[95dvw] lg:max-w-[80dvw] rounded-md shadow-md mx-auto bg-primary-default'
+      variant='gradient'>
       {/* Header Section */}
       <div className='flex flex-wrap justify-between items-center p-2 min-w-96'>
         <div>
           <h3 className='text-lg font-semibold'>User table</h3>
-          <p className='text-sm text-primary-light'>Overview of users.</p>
+          <p className='text-sm text-text-light'>Overview of users.</p>
         </div>
         <div className='mt-3 sm:mt-0'>
           <div className='relative w-full max-w-sm'>
@@ -235,7 +234,7 @@ const User = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className='w-full form-input'
             />
-            <MagnifyingGlassIcon className='w-4 h-4 absolute top-1/2 right-3 transform -translate-y-1/2 text-primary-light' />
+            <MagnifyingGlassIcon className='w-4 h-4 absolute top-1/2 right-3 transform -translate-y-1/2 text-text-light' />
           </div>
         </div>
       </div>
@@ -248,7 +247,7 @@ const User = () => {
             value='all'
             checked={filterStatus === "all"}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className='text-primary-light focus:ring-primary-light'
+            className='text-text-light focus:ring-primary-light'
           />
           <span className='text-sm capitalize'>All</span>
         </label>
@@ -259,7 +258,7 @@ const User = () => {
             value='blocked'
             checked={filterStatus === "blocked"}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className='text-primary-light focus:ring-primary-light'
+            className='text-text-light focus:ring-primary-light'
           />
           <span className='text-sm capitalize'>Blocked</span>
         </label>
@@ -270,13 +269,13 @@ const User = () => {
             value='unblocked'
             checked={filterStatus === "unblocked"}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className='text-primary-light focus:ring-primary-light'
+            className='text-text-light focus:ring-primary-light'
           />
           <span className='text-sm capitalize'>Unblocked</span>
         </label>
         <TrashIcon
           title='Clear filters'
-          className='w-4 h-4 text-primary-light hover:scale-105 transition-all delay-100 hover:text-error-light duration-500'
+          className='w-4 h-4 text-text-light hover:scale-105 transition-all delay-100 hover:text-error-light duration-500'
           onClick={() => {
             setFilterStatus("all");
             setSearchQuery("");

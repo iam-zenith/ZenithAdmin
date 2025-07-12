@@ -125,8 +125,7 @@ const Whatsapp = () => {
   return (
     <Card
       className='profile-box flex flex-col space-y-2 md:max-w-[65dvw] lg:max-w-[30dvw] w-full'
-      variant='gradient'
-      color='gray'>
+      variant='gradient'>
       <h2 className='text-lg font-semibold mb-2 flex justify-between'>
         Whatsapp Configuration
         <QuestionMarkCircleIcon
@@ -136,17 +135,17 @@ const Whatsapp = () => {
         />
       </h2>
       {show && (
-        <p className='text-sm text-primary-light mb-2'>
+        <p className='text-sm text-text-light mb-2'>
           Enter a value that matches <code>+17620368101</code>
           <br />
           Excluding the hyphen {`(-)`}, the whitespace {`( )`} but not the country code {`+1`}
         </p>
       )}
       <p>
-        <strong className='text-primary-light'>Current Whatsapp number:</strong> {number}
+        <strong className='text-text-light'>Current Whatsapp number:</strong> {number}
       </p>
       <p>
-        <strong className='text-primary-light'>Updated at:</strong> {formatToNewYorkTime(updatedAt)}
+        <strong className='text-text-light'>Updated at:</strong> {formatToNewYorkTime(updatedAt)}
       </p>
       <form onSubmit={handleUpdate} className='flex flex-col space-y-2'>
         <div>

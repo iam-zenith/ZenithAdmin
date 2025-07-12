@@ -139,8 +139,7 @@ const TraderForm = ({ detail, setsuccess }) => {
       {/* Form to create new trader */}
       <Card
         className='profile-box flex flex-col space-y-4 col-span-1 md:col-span-2'
-        variant='gradient'
-        color='gray'>
+        variant='gradient'>
         <h2 className='text-lg font-semibold mb-2'>Create/Edit Trader</h2>
         <div className='flex justify-between'>
           <h3 className='font-semibold text-2xl capitalize'>{name || "New Trader"}</h3>
@@ -158,7 +157,7 @@ const TraderForm = ({ detail, setsuccess }) => {
           </div>
         </div>
         {showPrompt && (
-          <p className='text-md text-primary-light mb-2'>
+          <p className='text-md text-text-light mb-2'>
             Using the same name will update the existing trader with that name.
           </p>
         )}

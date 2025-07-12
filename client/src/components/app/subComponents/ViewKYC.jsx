@@ -117,13 +117,13 @@ const ViewKYC = () => {
             {parsedKYC.type}
           </Typography>
         </div>
-        <Typography className='text-sm text-primary-light'>KYC details</Typography>
+        <Typography className='text-sm text-text-light'>KYC details</Typography>
         <div className='my-2 flex flex-col space-y-2'>
           <p>
-            <strong className='text-primary-light'>KYC ID:</strong> {parsedKYC._id}
+            <strong className='text-text-light'>KYC ID:</strong> {parsedKYC._id}
           </p>
           <p>
-            <strong className='text-primary-light'>Status:</strong>{" "}
+            <strong className='text-text-light'>Status:</strong>{" "}
             {parsedKYC?.state ? (
               <span>
                 Verified{" "}
@@ -137,19 +137,19 @@ const ViewKYC = () => {
             )}
           </p>
           <p>
-            <strong className='text-primary-light'>Created At:</strong>{" "}
+            <strong className='text-text-light'>Created At:</strong>{" "}
             {formatToNewYorkTime(parsedKYC.createdAt)}
           </p>
           <p>
-            <strong className='text-primary-light'>Updated At:</strong>{" "}
+            <strong className='text-text-light'>Updated At:</strong>{" "}
             {formatToNewYorkTime(parsedKYC.updatedAt)}
           </p>
         </div>
         <div className='my-2 flex flex-col space-y-2'>
-          <Typography className='text-sm text-primary-light'>User Details</Typography>
+          <Typography className='text-sm text-text-light'>User Details</Typography>
           <div className='flex flex-row justify-between'>
             <p>
-              <strong className='text-primary-light'>Client ID:</strong> {parsedKYC.user}
+              <strong className='text-text-light'>Client ID:</strong> {parsedKYC.user}
             </p>
             {copied ? (
               <ClipboardDocumentCheckIcon
@@ -165,19 +165,19 @@ const ViewKYC = () => {
             )}
           </div>
           <p>
-            <strong className='text-primary-light'>Full Name:</strong> {userDetails.fullName}
+            <strong className='text-text-light'>Full Name:</strong> {userDetails.fullName}
           </p>
           <p>
-            <strong className='text-primary-light'>Email:</strong> {userDetails.email}
+            <strong className='text-text-light'>Email:</strong> {userDetails.email}
           </p>
           <p>
-            <strong className='text-primary-light'>Phone Number:</strong> {userDetails.phoneNumber}
+            <strong className='text-text-light'>Phone Number:</strong> {userDetails.phoneNumber}
           </p>
           <p className='capitalize'>
-            <strong className='text-primary-light'>Gender:</strong> {userDetails.gender}
+            <strong className='text-text-light'>Gender:</strong> {userDetails.gender}
           </p>
           <p>
-            <strong className='text-primary-light'>Country:</strong> {userDetails.country}
+            <strong className='text-text-light'>Country:</strong> {userDetails.country}
           </p>
         </div>
       </CardBody>

@@ -77,8 +77,7 @@ const Signal = () => {
     <main className='grid md:grid-cols-5 grid-cols-1 gap-4'>
       <Card
         className='profile-box flex flex-col space-y-4 col-span-1 md:col-span-2'
-        variant='gradient'
-        color='gray'>
+        variant='gradient'>
         <h2 className='text-lg font-semibold mb-2'>Set Signal</h2>
         <form className='flex flex-col space-y-2' onSubmit={handleSubmit}>
           {loading ? (

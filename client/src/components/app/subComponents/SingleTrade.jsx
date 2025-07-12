@@ -203,8 +203,7 @@ export default function SingleTrade() {
   return (
     <Card
       className='w-full max-w-[96dvh] md:max-w-[26rem] shadow-lg text-text-light'
-      variant='gradient'
-      color='gray'>
+      variant='gradient'>
       <CardBody>
         <div className='mb-3 flex flex-row items-center justify-between'>
           <Typography variant='h2' className='font-medium text-text-light'>
@@ -217,11 +216,11 @@ export default function SingleTrade() {
             <ArrowUturnLeftIcon className='text-text-light w-5 h-5' title='Go back' />
           </IconButton>
         </div>
-        <Typography className='text-sm text-primary-light'>Client details.</Typography>
+        <Typography className='text-sm text-text-light'>Client details.</Typography>
         <div className='my-2 flex flex-col space-y-2'>
           <div className='flex flex-row justify-between'>
             <p>
-              <strong className='text-primary-light'>Client ID:</strong>{" "}
+              <strong className='text-text-light'>Client ID:</strong>{" "}
               {parsedTrade?.user?.id || "N/A"}
             </p>
             {copied ? (
@@ -235,50 +234,49 @@ export default function SingleTrade() {
             )}
           </div>
           <p>
-            <strong className='text-primary-light'>Client Email:</strong>
+            <strong className='text-text-light'>Client Email:</strong>
             <span className='capitalize'>{parsedTrade?.user?.email}</span>
           </p>
-          <Typography className='text-sm text-primary-light'>Trade details.</Typography>
+          <Typography className='text-sm text-text-light'>Trade details.</Typography>
           <p>
-            <strong className='text-primary-light'>Trade ID:</strong> {parsedTrade._id}
+            <strong className='text-text-light'>Trade ID:</strong> {parsedTrade._id}
           </p>
           <p>
-            <strong className='text-primary-light'>Trade Type:</strong>
+            <strong className='text-text-light'>Trade Type:</strong>
             <span className='capitalize'>{parsedTrade.type}</span>
           </p>
           <p>
-            <strong className='text-primary-light'>Currency Pair:</strong>{" "}
-            {parsedTrade.currencyPair}
+            <strong className='text-text-light'>Currency Pair:</strong> {parsedTrade.currencyPair}
           </p>
           <p>
-            <strong className='text-primary-light'>Created At:</strong>{" "}
+            <strong className='text-text-light'>Created At:</strong>{" "}
             {formatToNewYorkTime(parsedTrade.createdAt)}
           </p>
           <p>
-            <strong className='text-primary-light'>Closed At:</strong>{" "}
+            <strong className='text-text-light'>Closed At:</strong>{" "}
             {parsedTrade.closedAt ? formatToNewYorkTime(parsedTrade.closedAt) : "N/A"}
           </p>
           <p>
-            <strong className='text-primary-light'>Duration:</strong>{" "}
+            <strong className='text-text-light'>Duration:</strong>{" "}
             {(parsedTrade?.duration && formatTime(parsedTrade?.duration)) || "N/A"}
           </p>
           <p>
-            <strong className='text-primary-light'>Stop Loss:</strong>
+            <strong className='text-text-light'>Stop Loss:</strong>
             {" $"}
             {parsedTrade?.stopLoss ? parseFloat(parsedTrade.stopLoss).toLocaleString() : "N/A"}
           </p>
           <p>
-            <strong className='text-primary-light'>Take Profit:</strong>
+            <strong className='text-text-light'>Take Profit:</strong>
             {" $"}
             {parsedTrade?.takeProfit ? parseFloat(parsedTrade.takeProfit).toLocaleString() : "N/A"}
           </p>
           <p>
-            <strong className='text-primary-light'>Exit Price:</strong>
+            <strong className='text-text-light'>Exit Price:</strong>
             {" $"}
             {parsedTrade?.exitPrice ? parseFloat(parsedTrade.exitPrice).toLocaleString() : "N/A"}
           </p>
           <p>
-            <strong className='text-primary-light'>Profit Loss:</strong>
+            <strong className='text-text-light'>Profit Loss:</strong>
             {" $"}
             {parsedTrade?.profitLoss ? parseFloat(parsedTrade.profitLoss).toLocaleString() : "N/A"}
           </p>
@@ -297,7 +295,7 @@ export default function SingleTrade() {
               onChange={(e) => setexitPrice(e.target.value)}
             />
             <p>
-              <strong className='text-primary-light text-sm'>Calculated Profit Loss:</strong>{" "}
+              <strong className='text-text-light text-sm'>Calculated Profit Loss:</strong>{" "}
               <span
                 className={`text-sm ${profitLoss > 0 ? "text-success-dark" : "text-error-dark"}`}>
                 ${parseFloat(profitLoss).toLocaleString()}

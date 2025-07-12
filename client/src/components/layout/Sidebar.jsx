@@ -115,7 +115,7 @@ function SidebarContent() {
           icon={
             <ChevronDownIcon
               strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform hover:text-text-dark ${
+              className={`mx-auto h-4 w-4 transition-transform hover:text-text-light ${
                 open === 1 ? "rotate-180" : "text-text-light"
               }`}
             />
@@ -158,7 +158,7 @@ function SidebarContent() {
           icon={
             <ChevronDownIcon
               strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform hover:text-text-dark ${
+              className={`mx-auto h-4 w-4 transition-transform hover:text-text-light ${
                 open === 2 ? "rotate-180" : "text-text-light"
               }`}
             />
@@ -201,7 +201,7 @@ function SidebarContent() {
           icon={
             <ChevronDownIcon
               strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform hover:text-text-dark ${
+              className={`mx-auto h-4 w-4 transition-transform hover:text-text-light ${
                 open === 2 ? "rotate-180" : "text-text-light"
               }`}
             />

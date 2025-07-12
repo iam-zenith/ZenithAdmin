@@ -101,7 +101,7 @@ const Traders = () => {
               key={trader?._id || index}
               className={`deposit-box cursor-pointer flex flex-col items-center justify-center h-full ${
                 selectedDetails?._id === trader?._id
-                  ? "!bg-primary-light text-text-dark shadow-lg"
+                  ? "!bg-primary-light text-text-light shadow-lg"
                   : ""
               }`}
               onClick={() => handleSelectTrader(trader)}>
@@ -126,7 +126,7 @@ const Traders = () => {
 
       {/* No traders available */}
       {!isLoading && traders.length === 0 && (
-        <div className='w-full lg:max-w-md mx-auto lg:mx-0 bg-transparent flex flex-row justify-center lg:justify-start text-primary-light space-x-2 p-10 lg:ps-0'>
+        <div className='w-full lg:max-w-md mx-auto lg:mx-0 bg-transparent flex flex-row justify-center lg:justify-start text-text-light space-x-2 p-10 lg:ps-0'>
           <p className='text-sm font-semibold'>No trader currently available</p>
           <ExclamationTriangleIcon className='w-5 h-5' />
         </div>
@@ -134,7 +134,7 @@ const Traders = () => {
 
       {/* Instructions */}
       {!selectedDetails && !isNewTrader && traders.length > 0 && (
-        <div className='w-full h-[50vh] lg:max-w-md mx-auto lg:mx-0 bg-transparent flex flex-row justify-center lg:justify-start text-primary-light space-x-2 p-10 lg:ps-0'>
+        <div className='w-full h-[50vh] lg:max-w-md mx-auto lg:mx-0 bg-transparent flex flex-row justify-center lg:justify-start text-text-light space-x-2 p-10 lg:ps-0'>
           <p className='text-sm font-semibold'>Select a trader to edit</p>
           <CursorArrowRaysIcon className='w-7 h-7' />
         </div>

@@ -132,7 +132,7 @@ const Billing = () => {
               key={option?.address || index}
               className={`deposit-box cursor-pointer ${
                 selectedDetails?.address === option?.address
-                  ? "!bg-primary-light text-text-dark shadow-lg"
+                  ? "!bg-primary-light text-text-light shadow-lg"
                   : ""
               }`}
               onClick={() => handleSelectOption(option)}>
@@ -161,7 +161,7 @@ const Billing = () => {
 
       {/* No billing options available */}
       {!isLoading && billingOptions.length === 0 && (
-        <div className='w-full lg:max-w-md mx-auto lg:mx-0 bg-transparent flex flex-row justify-center lg:justify-start text-primary-light space-x-2 p-10 lg:ps-0'>
+        <div className='w-full lg:max-w-md mx-auto lg:mx-0 bg-transparent flex flex-row justify-center lg:justify-start text-text-light space-x-2 p-10 lg:ps-0'>
           <p className='text-sm font-semibold'>No billing option currently available</p>
           <ExclamationTriangleIcon className='w-5 h-5' />
         </div>
@@ -169,7 +169,7 @@ const Billing = () => {
 
       {/* Instructions */}
       {!selectedDetails && !isNewOption && billingOptions.length > 0 && (
-        <div className='w-full h-[50vh] lg:max-w-md mx-auto lg:mx-0 bg-transparent flex flex-row justify-center lg:justify-start text-primary-light space-x-2 p-10 lg:ps-0'>
+        <div className='w-full h-[50vh] lg:max-w-md mx-auto lg:mx-0 bg-transparent flex flex-row justify-center lg:justify-start text-text-light space-x-2 p-10 lg:ps-0'>
           <p className='text-sm font-semibold'>Select a billing option to edit</p>
           <CursorArrowRaysIcon className='w-7 h-7' />
         </div>

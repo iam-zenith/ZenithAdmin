@@ -57,7 +57,7 @@ const LatestInvestments = () => {
     { Icon: ClockIcon, status: "pending", color: "text-warning-dark", title: "Pending" },
   ];
   return (
-    <Card className='dashboard-box flex flex-col h-full' variant='gradient' color='gray'>
+    <Card className='dashboard-box flex flex-col h-full' variant='gradient'>
       <CardBody className='p-0'>
         <div className='flex items-center justify-between'>
           <div className='flex flex-col'>
@@ -81,9 +81,7 @@ const LatestInvestments = () => {
                     <Typography className='text-text-light' variant='h6'>
                       ${parseFloat(amount).toLocaleString()}
                     </Typography>
-                    <Typography variant='small' color='gray'>
-                      {formatToNewYorkTime(createdAt)}
-                    </Typography>
+                    <Typography variant='small'>{formatToNewYorkTime(createdAt)}</Typography>
                   </div>
                 </div>
                 <Typography className='text-text-light' variant='h6'>
