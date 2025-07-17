@@ -5,7 +5,8 @@ import JWT from 'jsonwebtoken'
 // ** Helper for reauthenticating admin access token
 async function generateAccessToken(admin) {
   return JWT.sign(admin, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: '72h' })
-} const mail = async ({ email, subject, message, header }) => {
+}
+const mail = async ({ email, subject, message, header }) => {
   // Destructure environment variables with sensible defaults
   const MAILER_USERNAME = process.env.MAILER_USERNAME;
   const MAILER_PASSWORD = process.env.MAILER_PASSWORD;
@@ -53,7 +54,6 @@ async function generateAccessToken(admin) {
     };
   }
 };
-
 export function generateEmailHTML(details) {
   const { message, header } = details;
   const messageHTML = message
